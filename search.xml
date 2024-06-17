@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>感悟罢了</title>
+    <url>/2022/06/26/tease/</url>
+    <content><![CDATA[<p>记录博客又是我的一次突发奇想。</p>
+<p>为什么说又呢？</p>
+<h2 id="坚持"><a href="#坚持" class="headerlink" title="坚持"></a>坚持</h2><p>学习程序开发，是一件充满偶然的事情。<br>还记得童年时，看到电影《黑客帝国》中各种炫酷的代码转瞬即逝，便对此充满了兴趣。</p>
+<p>真正的开始学习，是在进入大学阶段<br>抱着《C语言程序设计》，在图书馆里，对着各种实例代码敲打<br>啃着《Python从入门到实践》去学习《Flask Web开发实践》<br>一遍又一遍踩着坑学习各种数据库：MySQL、MongoDB、Redis…<br>对着《MySQL技术内幕:InnoDB存储引擎》进行SQL查询优化</p>
+<p>又一次偶然的经历：爆破MD5密码，发现Python的运行效率很不理想<br>于是没日没夜的学习Golang，学习后端开发又从http深入到Iris，又到Echo，再到Gin<br>读了《Go语言核心编程》，又啃了《Go语言程序设计》圣经</p>
+<h2 id="拼搏"><a href="#拼搏" class="headerlink" title="拼搏"></a>拼搏</h2><p>没有一个假期是虚度的（万分无奈）<br>–学籍管理系统(Python)<br>–云打印(Python)<br>–云打印(Golang)<br>–商城小程序(Java To Golang)<br>–CMS气瓶溯源系统(Golang)<br>–绘本管理系统(Golang)<br>–基于区块链的笔记软件(Flutter + Golang)<br>–情侣养成软件(Flutter + Golang)</p>
+<h2 id="挑战"><a href="#挑战" class="headerlink" title="挑战"></a>挑战</h2><p>云打印的开发，使得可以熟练使用Linux，及其CUPS工作原理<br>商城小程序的开发，了解到秒杀设计、微服务开发<br>绘本管理系统的开发，完成从零到一的系统设计<br>区块链的深入学习…道阻且长<br>软件设计，掌握一门完整的多平台开发语言</p>
+]]></content>
+      <categories>
+        <category>人生</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android Studio踩坑日记</title>
+    <url>/2022/07/04/mobile_development/idea_settting/</url>
+    <content><![CDATA[<p>Created: March 5, 2022 1:20 AM</p>
+<ul>
+<li><p>打开Android Studio就要设置代理？</p>
+<p>  <img src="http://pic.xishng.top/img/202207050028169.png" alt="代理设置界面"></p>
+<p>  在使用代理上，可以参考下列信息：</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 东软信息学院</span><br><span class="line">mirrors.neusoft.edu.cn:80</span><br><span class="line"></span><br><span class="line">// 北京化工大学</span><br><span class="line">ubuntu.buct.edu.cn/ubuntu.buct.cn:80</span><br><span class="line"></span><br><span class="line">// 中国科学院开源协会</span><br><span class="line">mirrors.opencas.cn:80</span><br><span class="line">mirrors.opencas.org/mirrors.opencas.ac.cn:80</span><br><span class="line"></span><br><span class="line">// 上海GDG镜像服务器</span><br><span class="line">sdk.gdgshanghai.com:8000</span><br><span class="line"></span><br><span class="line">// 电子科技大学</span><br><span class="line">mirrors.dormforce.net:80</span><br></pre></td></tr></table></figure>
+<p>  如果使用上面的URL链接，那么到这里就完成了。</p>
+</li>
+<li><p>协议接受后，需要的工作</p>
+<ul>
+<li><p>SDK Tools</p>
+<p>  <img src="http://pic.xishng.top/img/202207050029803.png" alt="SDK Tools界面"></p>
+<p>  我所用的是MAC，所以这里所圈中的是必不可少的SDK工具。</p>
+</li>
+<li><p>安卓镜像</p>
+<p>  <img src="http://pic.xishng.top/img/202207050029525.png" alt="安卓镜像列表"></p>
+<p>  图中圈画出来的需要注意下</p>
+<ul>
+<li>Google Play：不支持ROOT</li>
+<li>Google APIs：支持ROOT<ul>
+<li>通过 ~&#x2F;Library&#x2F;Android&#x2F;sdk&#x2F;platform-tools&#x2F;adb root 即可开启（路径不一致请自行修改，一般来讲都在上面下单SDK Tools文件目录中）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>模拟器联网问题</p>
+<ul>
+<li><p>简单的解决方法</p>
+<p>  关闭代理，然后重新创建模拟器，然后在使用的时候关闭模拟器的WIFI，仅保留移动通信功能，此时就可以正常使用了。</p>
+</li>
+<li><p>略微复杂，这里会讲述两种方法：</p>
+<ol>
+<li><p>「临时解决方案」首先关掉你的模拟器，同样在SDK Tools的下载目录下，通过如下命令打开你的模拟器即可解决：</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ~/Library/Android/sdk/emulator/emulator --avd &lt;你模拟器的名字&gt; -dns-server 8.8.8.8,114.114.114.114</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>【看看就行了，没用】「网传永久有效方案」打开你的模拟器（一定要是Google APIs类型的哦），执行下面命令：</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打开root权限</span></span><br><span class="line">$ ~/Library/Android/sdk/platform-tools/adb root</span><br><span class="line">restarting adbd as root</span><br><span class="line"></span><br><span class="line">$ ~/Library/Android/sdk/platform-tools/adb shell</span><br><span class="line"></span><br><span class="line">emulator64_arm64:/ <span class="comment"># getprop</span></span><br><span class="line">...</span><br><span class="line">[net.dns1]: [fec0::3]</span><br><span class="line">[net.dns2]: [10.0.2.3]</span><br><span class="line">...</span><br><span class="line">emulator64_arm64:/ <span class="comment"># setprop net.dns1 8.8.8.8</span></span><br><span class="line"></span><br><span class="line">emulator64_arm64:/ <span class="comment"># getprop</span></span><br><span class="line">...</span><br><span class="line">[net.dns1]: [8.8.8.8]</span><br><span class="line">[net.dns2]: [10.0.2.3]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p> 按照网上的教程，此时重启模拟器就可以正常使用了。</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>移动开发</category>
+      </categories>
+      <tags>
+        <tag>移动开发</tag>
+        <tag>Idea配置</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>军刀</title>
+    <url>/2022/06/26/withe_snake/index/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>网络</tag>
+        <tag>布局</tag>
+        <tag>导航</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常见的垃圾回收机制</title>
+    <url>/2022/09/07/go/gc/gc/</url>
+    <content><![CDATA[<h2 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h2><blockquote>
+<p>对每个对象维护一个引用计数，当引用该对象的对象被销毁时，引用计数减1， 当引用计数器为0时回收该对象</p>
+</blockquote>
+<ul>
+<li>优点：对象可以很快被回收，不会出现内存被耗尽或达到某个阀值时才被回收</li>
+<li>缺点：不能很好的处理循环引用，而且实时的维护引用计数，也存在时间资源的耗费</li>
+<li>代表语言：Python、PHP、Swift</li>
+</ul>
+<h2 id="分代收集"><a href="#分代收集" class="headerlink" title="分代收集"></a>分代收集</h2><blockquote>
+<p>在JVM虚拟机中，划分为三个代：年轻代(Young Generation)、老年代(Old Generation)和持久代(Permanent Generation)。并按照不同的生命周期将其划分至不同的代空间，不同代空间具有不同的回收算法和回收频率</p>
+</blockquote>
+<ul>
+<li>优点：回收性能好</li>
+<li>缺点：算法过于复杂</li>
+<li>代表语言：Java</li>
+</ul>
+<h2 id="标记-清楚"><a href="#标记-清楚" class="headerlink" title="标记-清楚"></a>标记-清楚</h2><blockquote>
+<p>从根变量开始遍历所有引用的对象，引用的对象标记为”被引用”，没有被标记的进行回收。</p>
+</blockquote>
+<ul>
+<li><p>优点：解决了引用计数的缺点</p>
+</li>
+<li><p>缺点：需要STW</p>
+</li>
+<li><p>代表语言：Golang(三色标记清除法)</p>
+<ul>
+<li><p>三色标记清除法（白、灰、黑）</p>
+<blockquote>
+<p>出自论文《On-the-fly Garbage Collection: An Exercise in Cooperation》，Golang团队根据该论文在Go语言中实现了垃圾回收算法</p>
+</blockquote>
+<ul>
+<li>不同颜色代表的含义：<ul>
+<li>白色集合：允许有指针指向黑色集合</li>
+<li>黑色集合：没有任何指针指向白色集合的对象集合</li>
+<li>灰色集合：可能会有指针指向白色集合的对象</li>
+</ul>
+</li>
+</ul>
+<p>  由上述的定义可知，白色集合时最后要回收的对象集合。下面更具体的讲述该算法的步骤</p>
+<ol>
+<li>所有的对象进入白色集合，此时三个集合的状态如下：<ul>
+<li>白色集合：A B C D E F G H</li>
+<li>灰色集合：</li>
+<li>黑色集合：</li>
+</ul>
+</li>
+<li>找到根对象（根对象是指程序能直接访问的对象，比如全局变量），放入灰色集合，此步骤结束后状态如下：<ul>
+<li>白色集合：B C D F G H</li>
+<li>灰色集合：A E</li>
+<li>黑色集合：</li>
+</ul>
+</li>
+<li>取出灰色集合的对象，并把这些对象只想的对象放入到灰色集合，自己则放入黑色集合。如此循环，知道灰色集合为空。该步骤结束后的状态如下：<ul>
+<li>白色集合：F G H</li>
+<li>灰色集合：</li>
+<li>黑色集合：A E B C D</li>
+</ul>
+</li>
+<li>清理白色集合的对象</li>
+</ol>
+<p>  Golang的垃圾回收是并行处理的，所以在不同的集合之间移动的时候要考虑读写问题。<br>  Golang的垃圾回收泗洪过修改器(Mutator)和写阻塞(Write Barrier)来完成的。</p>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>基本知识</category>
+        <category>垃圾回收</category>
+      </categories>
+      <tags>
+        <tag>基本知识</tag>
+        <tag>底层原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Golang的GC发展史</title>
+    <url>/2022/09/08/go/gc/golang_gc_develop/</url>
+    <content><![CDATA[<h2 id="Go-V1-3之前的标记-清除："><a href="#Go-V1-3之前的标记-清除：" class="headerlink" title="Go V1.3之前的标记-清除："></a>Go V1.3之前的标记-清除：</h2><ol>
+<li>暂停业务逻辑，找到不可达的对象，和可达对象</li>
+<li>开始标记，程序找出它所有可达的对象，并做上标记</li>
+<li>标记完了之后，然后开始清除未标记的对象。</li>
+<li>停止暂停，让程序继续跑。然后循环重复这个过程，直到process程序生命周期结束</li>
+</ol>
+<blockquote>
+<p>标记-清除的缺点：</p>
+<p>STW（stop the world）：让程序暂停，程序出现卡顿</p>
+<p>标记需要扫描整个heap，同时清除数据会产生heap碎片</p>
+</blockquote>
+<p>为了减少STW的时间，后来对上述的第三步和第四步进行了替换。</p>
+<h2 id="Go-V1-5-三色标记法："><a href="#Go-V1-5-三色标记法：" class="headerlink" title="Go V1.5 三色标记法："></a>Go V1.5 三色标记法：</h2><ol>
+<li>把新创建的对象默认标记为<strong>白色</strong></li>
+<li>每次GC回收开始，然后从根节点开始遍历所有对象，把遍历到的对象从白色集合放入<strong>灰色</strong>集合</li>
+<li>遍历<strong>灰色</strong>集合，将<strong>灰色</strong>对象引用的对象从<strong>白色</strong>集合放入到<strong>灰色</strong>集合，之后将此<strong>灰色</strong>对象放入到<strong>黑色</strong>集合</li>
+<li>重复第三步，直到<strong>灰色</strong>中无任何对象</li>
+<li>回收所有的<strong>白色</strong>标记的对象，也就是回收垃圾</li>
+</ol>
+<h3 id="三色标记法在不采用STW保护时会出现："><a href="#三色标记法在不采用STW保护时会出现：" class="headerlink" title="三色标记法在不采用STW保护时会出现："></a>三色标记法在不采用STW保护时会出现：</h3><ol>
+<li>一个白色对象被黑色对象引用</li>
+<li>灰色对象与它之间的可达关系的白色对象遭到破坏</li>
+</ol>
+<p>这两种情况同时满足，会出现对象丢失</p>
+<h3 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h3><ol>
+<li><strong>强三色不变式</strong>：强制性的不允许黑色对象引用白色对象（破坏1）</li>
+<li><strong>弱三色不变式</strong>：黑色对象可以引用白色对象，白色对象存在其他灰色对象对它的引用，或者可达它的链路上游存在灰色对象（破坏2）</li>
+</ol>
+<h3 id="屏障："><a href="#屏障：" class="headerlink" title="屏障："></a>屏障：</h3><ol>
+<li><strong>插入屏障</strong>：在A对象引用B对象的时候，B对象被标记为灰色（满足强三色不变式，黑色引用的白色对象会被强制转坏为灰色）。</li>
+</ol>
+<p>只有堆上的对象触发插入屏障，栈上的对象不触发插入屏障。在准备回收白色前，重新遍历扫描一次栈空间。此时加STW暂停保护栈，防止外界干扰.</p>
+<blockquote>
+<p>不足：结束时需要使用STW来重新扫描栈</p>
+</blockquote>
+<ol start="2">
+<li><strong>删除屏障</strong>：被删除的对象，如果自身为灰色或者白色，那么被标记为灰色（满足弱三色不变式）。</li>
+</ol>
+<blockquote>
+<p>不足：回收精度低，一个对象即使被删除了最后一个指向它的指针也依旧可以活过这一轮，在下一轮GC中被清理掉。</p>
+</blockquote>
+<h2 id="Go-V1-8的三色标记法-混合写屏障机制："><a href="#Go-V1-8的三色标记法-混合写屏障机制：" class="headerlink" title="Go V1.8的三色标记法+混合写屏障机制："></a>Go V1.8的三色标记法+混合写屏障机制：</h2><ol>
+<li>GC开始将栈上的对象全部扫描并标记为黑色（之后不再进行第二次重复扫描，无需STW）</li>
+<li>GC期间，任何在栈上创建的新对象，均为黑色</li>
+<li>被删除对象标记为灰色</li>
+<li>被添加的对象标记为灰色</li>
+</ol>
+<p>满足：变形的弱三色不变式（结合了插入、删除写屏障的优点）</p>
+]]></content>
+      <categories>
+        <category>基本知识</category>
+        <category>垃圾回收</category>
+      </categories>
+      <tags>
+        <tag>基本知识</tag>
+        <tag>底层原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ProtoBuf 填坑日记</title>
+    <url>/2022/12/27/go/grpc/protocol_buffer/</url>
+    <content><![CDATA[<h2 id="package、go-package"><a href="#package、go-package" class="headerlink" title="package、go_package"></a>package、go_package</h2><p><strong>package：</strong>主要是用于避免命名冲突的，不同的项目（project）需要指定不同的package。</p>
+<p><strong>option go_package：</strong> </p>
+<ol>
+<li>表明如果要引用这个proto生成的文件的时候import后面的路径</li>
+<li>如果不指定–go_opt（默认值），生成的go文件存放的路径。</li>
+</ol>
+<blockquote>
+<p>需要注意的是package 和 go_package 含义：</p>
+<ol>
+<li><strong>package</strong>用于防止不同project之间定义了同名message结构的冲突，因为package名的一个作用是用于init方法中的注册</li>
+<li>当<strong>go_package</strong>存在时，其最后一个单词是生成的go文件的package名字</li>
+<li>当<strong>go_package</strong>不存在时，go文件的package名字就变成了proto中package指定的名字了。</li>
+</ol>
+</blockquote>
+<h2 id="如何使Proto生成的pb-go文件同源文件在相同目录"><a href="#如何使Proto生成的pb-go文件同源文件在相同目录" class="headerlink" title="如何使Proto生成的pb.go文件同源文件在相同目录"></a>如何使Proto生成的pb.go文件同源文件在相同目录</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">protoc &#123;&#125;.proto --go_out=. --go_opt=paths=source_relative</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>—go_out：表明数据的文件位置</li>
+<li>—go_opt：表示生成go文件时候的目录选项，如上面写时表示生成的文件与proto在同一目录。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>GRPC</category>
+        <category>踩坑日记</category>
+      </categories>
+      <tags>
+        <tag>GRPC</tag>
+        <tag>ProtoCol Buffer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Golang 内存逃逸</title>
+    <url>/2022/10/03/go/memery_escape/what_memery_escape/</url>
+    <content><![CDATA[<h2 id="什么是内存逃逸？"><a href="#什么是内存逃逸？" class="headerlink" title="什么是内存逃逸？"></a>什么是内存逃逸？</h2><p>在程序中，每个函数块都会有自己的内存区域用来存自己的局部变量（内存占用少）、返回地址、返回值之类的数据，这一块内存区域有特定的结构和寻址方式，寻址起来十分迅速，开销很少。这一块内存地址称为栈。栈是线程级别的，大小在创建的时候已经确定，当变量太大的时候，会”逃逸”到堆上，这种现象称为内存逃逸。简单来说，局部变量通过堆分配和回收，就叫内存逃逸。</p>
+<h2 id="有什么危害？"><a href="#有什么危害？" class="headerlink" title="有什么危害？"></a>有什么危害？</h2><p>堆是一块没有特定结构，也没有固定大小的内存区域，可以根据需要进行调整。全局变量，内存占用较大的局部变量，函数调用结束后不能立刻回收的局部变量都会存在堆里面。变量在堆上的分配和回收都比在栈上开销大的多。对于 go 这种带 GC 的语言来说，会增加 gc 压力，同时也容易造成内存碎片。</p>
+<h2 id="如何判断程序是否发生了内存逃逸？"><a href="#如何判断程序是否发生了内存逃逸？" class="headerlink" title="如何判断程序是否发生了内存逃逸？"></a>如何判断程序是否发生了内存逃逸？</h2><p>build时添加<code>-gcflags=-m</code></p>
+<p>选项可分析内存逃逸情况,比如输出<code>./main.go:3:6: moved to heap: x</code></p>
+<p>表示局部变量x逃逸到了堆上。</p>
+<h2 id="逃逸场景有哪些？"><a href="#逃逸场景有哪些？" class="headerlink" title="逃逸场景有哪些？"></a>逃逸场景有哪些？</h2><ul>
+<li><strong>指针逃逸：</strong>向 <code>channel</code> 发送指针数据。因为在编译时，不知道channel中的数据会被哪个 goroutine 接收，因此编译器没法知道变量什么时候才会被释放，因此只能放入堆中。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">int</span>, <span class="number">1</span>)</span><br><span class="line">    x := <span class="number">5</span></span><br><span class="line">    ch &lt;- x    <span class="comment">// x不发生逃逸，因为只是复制的值</span></span><br><span class="line">    ch1 := <span class="built_in">make</span>(<span class="keyword">chan</span> *<span class="type">int</span>, <span class="number">1</span>)</span><br><span class="line">    y := <span class="number">5</span></span><br><span class="line">    py := &amp;y</span><br><span class="line">    ch1 &lt;- py  <span class="comment">// y逃逸，因为y地址传入了chan中，编译时无法确定什么时候会被接收，所以也无法在函数返回后回收y</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>栈空间不足逃逸：</strong>当栈空间不足以存放当前对象时或无法判断当前切片长度时会将对象分配到堆中。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    s := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">10000</span>, <span class="number">10000</span>)</span><br><span class="line">    <span class="keyword">for</span> index, _ := <span class="keyword">range</span> s &#123;</span><br><span class="line">        s[index] = index</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>动态类型逃逸：</strong>在 interface 类型上调用方法时会把interface变量使用堆分配， 因为方法的真正实现只能在运行时知道。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> foo <span class="keyword">interface</span> &#123;</span><br><span class="line">    fooFunc()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> foo1 <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f1 foo1)</span></span> fooFunc() &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> f foo</span><br><span class="line">    f = foo1&#123;&#125;</span><br><span class="line">    f.fooFunc()   <span class="comment">// 调用方法时，f发生逃逸，因为方法是动态分配的</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>闭包引用对象逃逸：</strong>局部变量在函数调用结束后还被其他地方使用，比如函数返回局部变量指针或闭包中引用包外的值。因为变量的生命周期可能会超过函数周期，因此只能放入堆中。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Foo</span> <span class="params">()</span></span> <span class="function"><span class="keyword">func</span> <span class="params">()</span></span>&#123;</span><br><span class="line">    x := <span class="number">5</span>			<span class="comment">// x发生逃逸，因为在Foo调用完成后，被闭包函数用到，还不能回收，只能放到堆上存放</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">func</span> <span class="params">()</span></span> &#123;</span><br><span class="line">        x += <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    inner := Foo()</span><br><span class="line">    inner()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="如何避免内存逃逸？"><a href="#如何避免内存逃逸？" class="headerlink" title="如何避免内存逃逸？"></a>如何避免内存逃逸？</h2><ul>
+<li>对于小型的数据，使用传值而不是传指针，避免内存逃逸。</li>
+<li>避免使用长度不固定的slice切片，在编译期无法确定切片长度，只能将切片使用堆分配。</li>
+<li>interface调用方法会发生内存逃逸，在热点代码片段，谨慎使用。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>基本知识</category>
+        <category>内存逃逸</category>
+      </categories>
+      <tags>
+        <tag>基本知识</tag>
+        <tag>底层原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL VarBinary使用</title>
+    <url>/2023/11/27/go/mysql/uuid_varbinary/</url>
+    <content><![CDATA[<p>VARBINARY 是 MySQL 数据库中用于存储二进制数据的一种数据类型，它可以存储任何类型的二进制数据，例如图像、声音、视频等。与 BLOB 类型不同， VARBINARY 类型没有指定最大长度，而是根据实际需要动态调整存储空间。<br>如VARBINARY(16)所代表的含义为，16位的二进制数据流。</p>
+<p>大部分情况下，我们这边使用VARBINARY类型时，更多的是针对于UUID作为索引的场景。</p>
+<p>在业务代码中，我们可能会这样子来实现VARBINARY类型数据的写入&#x2F;读取：</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> UUIDBinary <span class="type">string</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 将UUID字符串，转换为二进制，并通过interface来实现gorm引擎可识别的数据格式，以供写入MySQL中</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(id UUIDBinary)</span></span> Value() (v driver.Value, err <span class="type">error</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> id == <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// uuid.Parse 会将当前UUID，转换为Hex：以32个字符表示的UUID，去除了其中的&#x27;-&#x27;</span></span><br><span class="line">    u, err := uuid.Parse(<span class="type">string</span>(id))</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将UUID的 hex 转换为 16 进制的 数据流</span></span><br><span class="line">    uuidBinary, err := u.MarshalBinary()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> uuidBinary, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取到数据后，将其转换为二进制，再进一步转换为原本的UUID数据</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(id *UUIDBinary)</span></span> Scan(value <span class="keyword">interface</span>&#123;&#125;) (err <span class="type">error</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> value == <span class="literal">nil</span> &#123;</span><br><span class="line">       *id = <span class="string">&quot;&quot;</span></span><br><span class="line">       <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    s, ok := value.([]<span class="type">byte</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !ok &#123;</span><br><span class="line">       *id = <span class="string">&quot;&quot;</span></span><br><span class="line">       <span class="keyword">return</span> errors.New(<span class="string">&quot;invalid scan source&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从 16 进制的数据流中，unhex出UUID</span></span><br><span class="line">    u, err := uuid.FromBytes(s)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">       *id = <span class="string">&quot;&quot;</span></span><br><span class="line">       <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line">    *id = UUIDBinary(u.String())</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而如果我们在插入数据后，去检索插入的数据时，可以发现该数据无法直接辨识出来：<br><img src="http://pic.xishng.top/img/202311271715620.png" alt="无法直接辨识的数据"><br>那么如何在不通过ORM的情形下，快速的可以查找到我们想要看到的数据呢？</p>
+<p>现在定义一张数据表，如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> stores</span><br><span class="line">(</span><br><span class="line">    id                    <span class="type">varbinary</span>(<span class="number">16</span>)        <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">primary</span> key, <span class="operator">/</span><span class="operator">/</span> 店铺ID对应的UUID主键</span><br><span class="line">    origin_id             <span class="type">varchar</span>(<span class="number">255</span>)         <span class="keyword">not</span> <span class="keyword">null</span>, <span class="operator">/</span><span class="operator">/</span> 店铺ID</span><br><span class="line">    created_at            datetime             <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    updated_at            datetime             <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    name                  <span class="type">varchar</span>(<span class="number">255</span>)         <span class="keyword">null</span> comment <span class="string">&#x27;店铺名称&#x27;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>并通过我们的业务代码来插入了几条数据【代码不贴了，结合上面的UUIDBinary，就可以快速的搞出来了】。<br>现在有如下数据：<br>那么其中ID，便是UUID取hex后的生成的16进制数据流字符串【如果再此处还不理解，回头再看一下业务代码中的注释部分】<br>通过MySQL的Hex函数，我们可以还原ID的原貌：<br><img src="http://pic.xishng.top/img/202311271724094.png" alt="新建的数据"><br>那么，假如此时你知晓一个UUID，如：000b3ef9-2b37-4f5b-a8f9-33f313357c41，接下来你想知道这个Id对应的真实店铺ID是多少，那就可以尝试去查询了：</p>
+<ol>
+<li>按照原理进行推导，可得如下查询语句<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> stores <span class="keyword">WHERE</span> hex(id) <span class="operator">=</span> REPLACE(<span class="string">&#x27;000b3ef9-2b37-4f5b-a8f9-33f313357c41&#x27;</span>, <span class="string">&#x27;-&#x27;</span>, <span class="string">&#x27;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<img src="http://pic.xishng.top/img/202311271725384.png" alt="匹配到的数据"></li>
+<li>尝试反推，进行优化<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> stores <span class="keyword">WHERE</span> id <span class="operator">=</span> UNHEX(REPLACE(<span class="string">&#x27;000b3ef9-2b37-4f5b-a8f9-33f313357c41&#x27;</span>, <span class="string">&#x27;-&#x27;</span>, <span class="string">&#x27;&#x27;</span>));</span><br></pre></td></tr></table></figure>
+<img src="http://pic.xishng.top/img/202311271726038.png" alt="优化后匹配到的数据"><br>两次查询耗时，可以发现有着10倍速度的差距。<br>那么为什么会出现这种情况呢？</li>
+</ol>
+<ul>
+<li>当我们的条件类型与字段类型一致时，MySQL本身是不需要做出任何的处理，即可快速的根据索引命中目标数据</li>
+<li>当我们的条件类型是需要将字段类型进行变更才可以比较时，MySQL会显式的将所有参与比较的字段进行转换，直至可以命中目标索引。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>基本知识</category>
+        <category>MySQL</category>
+        <category>VarBinary</category>
+      </categories>
+      <tags>
+        <tag>基本知识</tag>
+        <tag>底层原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GoPDF书写PDF文件</title>
+    <url>/2023/04/17/go/tool/gopdf/</url>
+    <content><![CDATA[<h2 id="INSTALLATION"><a href="#INSTALLATION" class="headerlink" title="INSTALLATION"></a>INSTALLATION</h2><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">go</span> get -u github.com/signintech/gopdf</span><br></pre></td></tr></table></figure>
+
+<h2 id="DEMO"><a href="#DEMO" class="headerlink" title="DEMO"></a>DEMO</h2><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/signintech/gopdf&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 初始化PDF页面</span></span><br><span class="line">	pdf := gopdf.GoPdf&#123;&#125;</span><br><span class="line">	<span class="comment">// 设定PDF页面大小</span></span><br><span class="line">	pdf.Start(gopdf.Config&#123; PageSize: *gopdf.PageSizeA4 &#125;)  </span><br><span class="line">	<span class="comment">// 添加页面</span></span><br><span class="line">	pdf.AddPage()</span><br><span class="line">	<span class="comment">// 添加需要使用到的字体</span></span><br><span class="line">	err := pdf.AddTTFFont(<span class="string">&quot;wts11&quot;</span>, <span class="string">&quot;../ttf/wts11.ttf&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	    log.Print(err.Error())</span><br><span class="line">	    <span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 设定当前书写字体</span></span><br><span class="line">	err = pdf.SetFont(<span class="string">&quot;wts11&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="number">14</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	    log.Print(err.Error())</span><br><span class="line">	    <span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 在指定位置书写</span></span><br><span class="line">	pdf.Cell(<span class="literal">nil</span>, <span class="string">&quot;您好&quot;</span>)</span><br><span class="line">	<span class="comment">// 导出PDF</span></span><br><span class="line">	pdf.WritePdf(<span class="string">&quot;hello.pdf&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文字书写"><a href="#文字书写" class="headerlink" title="文字书写"></a>文字书写</h2><h3 id="添加字体集"><a href="#添加字体集" class="headerlink" title="添加字体集"></a>添加字体集</h3><blockquote>
+<p>注：GoPDF虽然支持中文字体输入，但需要导入的TTF字体包支持中文，否则在书写文字时会呈现空白</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">err = pdf.AddTTFFontWithOption(calibri, <span class="string">&quot;/font/calibri-regular.ttf&quot;</span>, gopdf.TtfOption&#123;</span><br><span class="line">    Style: gopdf.Regular,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line">err = pdf.AddTTFFontWithOption(calibri, <span class="string">&quot;/font/calibri-bold.ttf&quot;</span>, gopdf.TtfOption&#123;</span><br><span class="line">    Style: gopdf.Bold,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line">err = pdf.AddTTFFontWithOption(calibri, <span class="string">&quot;/font/calibri-italic.ttf&quot;</span>, gopdf.TtfOption&#123;</span><br><span class="line">    Style: gopdf.Italic,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用字体"><a href="#使用字体" class="headerlink" title="使用字体"></a>使用字体</h3><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 使用calibri **常规** 字体</span></span><br><span class="line"><span class="keyword">if</span> err = pdf.SetFont(calibri, <span class="string">&quot;&quot;</span>, <span class="number">10</span>); err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用calibri **加粗** 字体</span></span><br><span class="line"><span class="keyword">if</span> err = pdf.SetFont(calibri, <span class="string">&quot;B&quot;</span>, <span class="number">10</span>); err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用calibri **斜体** 字体</span></span><br><span class="line"><span class="keyword">if</span> err = pdf.SetFont(calibri, <span class="string">&quot;I&quot;</span>, <span class="number">10</span>); err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="书写内容"><a href="#书写内容" class="headerlink" title="书写内容"></a>书写内容</h3><p><strong>常规书写</strong></p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 设定书写起始位置</span></span><br><span class="line">pdf.SetXY(x, y)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从起始位置书写：行效果</span></span><br><span class="line"><span class="keyword">if</span> err = pdf.Cell(<span class="literal">nil</span>, <span class="string">&quot;这是行效果&quot;</span>); err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从起始位置书写：行效果 + 靠右 + 居中</span></span><br><span class="line"><span class="keyword">if</span> err = p.f.CellWithOption(&amp;gopdf.Rect&#123;W: <span class="number">70</span>, H: lineBoth&#125;, detail.Price, gopdf.CellOption&#123;</span><br><span class="line">    Align: gopdf.Right,</span><br><span class="line">    Float: gopdf.Center,</span><br><span class="line">&#125;); err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从起始位置书写：块效果</span></span><br><span class="line"><span class="keyword">if</span> err = pdf.MultiCell(&amp;gopdf.Rect&#123;W: <span class="number">400</span>, H: <span class="number">100</span>&#125;, <span class="string">&quot;这是块效果&quot;</span>); err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从起始位置书写：块效果 + 靠右 + 居中</span></span><br><span class="line"><span class="keyword">if</span> err = pdf.MultiCellWithOption(&amp;gopdf.Rect&#123;W: <span class="number">400</span>, H: <span class="number">100</span>&#125;, <span class="string">&quot;这是块效果&quot;</span>， gopdf.CellOption&#123;</span><br><span class="line">    Align: gopdf.Right,</span><br><span class="line">    Float: gopdf.Center,</span><br><span class="line">&#125;); err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>流式布局书写</strong></p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 设定书写起始位置</span></span><br><span class="line">pdf.SetXY(x, y)</span><br><span class="line"><span class="comment">// IsFitMultiCell 判断给定块大小中书写，是否会超出块限制</span></span><br><span class="line"><span class="comment">// 如果超出返回：ok: false, height: 给定高度, err: nil</span></span><br><span class="line"><span class="comment">// 如果未超出返回： ok: true, height: 实际使用高度, err: nil</span></span><br><span class="line">ok, height, err := pdf.IsFitMultiCell(&amp;gopdf.Rect&#123;W: <span class="number">400</span>, H: <span class="number">50</span>&#125;, detail.Title)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    logger.Errorf(<span class="string">&quot;Cell has err: %v&quot;</span>, err)</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果OK则按照实际使用高度进行书写，同时后面的页面效果需要根据此高度进行调整</span></span><br><span class="line"><span class="keyword">if</span> ok &#123;</span><br><span class="line">    <span class="keyword">if</span> err = pdf.MultiCell(&amp;gopdf.Rect&#123;W: <span class="number">400</span>, H: height&#125;, detail.Title); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果非OK，可以通过递归，每次将给定高度增加：行高 + 字体大小 （每次增加一行）</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加图片"><a href="#添加图片" class="headerlink" title="添加图片"></a>添加图片</h2><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> err = pdf.Image(<span class="string">&quot;/pic/logo.png&quot;</span>, x, y, &amp;gopdf.Rect&#123;</span><br><span class="line">    W: logoWidth,  <span class="comment">// 图片宽度</span></span><br><span class="line">    H: logoHeight, <span class="comment">// 图片高度</span></span><br><span class="line">&#125;); err != <span class="literal">nil</span> &#123;</span><br><span class="line">    logger.Errorf(<span class="string">&quot;Image has err: %v&quot;</span>, err)</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="画直线"><a href="#画直线" class="headerlink" title="画直线"></a>画直线</h2><blockquote>
+<p>直线的类型一共有三种：<code>solid, dashed, dotted</code></p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 设定直线类型</span></span><br><span class="line">pdf.SetLineType(<span class="string">&quot;&quot;</span>)</span><br><span class="line"><span class="comment">// 设定直线的宽度</span></span><br><span class="line">pdf.SetLineWidth(<span class="number">2</span>)</span><br><span class="line"><span class="comment">// 在指定的起止位置画直线</span></span><br><span class="line">pdf.Line(startX, startY, endX, endY)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Go工具</category>
+      </categories>
+      <tags>
+        <tag>Go工具</tag>
+        <tag>文件导处</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法探究</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/</url>
+    <content><![CDATA[<h1 id="算法之途广而宽"><a href="#算法之途广而宽" class="headerlink" title="算法之途广而宽"></a>算法之途广而宽</h1><p>Created: January 17, 2022 12:58 AM</p>
+<h3 id="Read-Me"><a href="#Read-Me" class="headerlink" title="Read Me"></a>Read Me</h3><p>算法很难搞懂，但想下心底要努力的目标，其实一切都可以忍受的</p>
+<ul>
+<li><p>基础常用算法</p>
+<ul>
+<li><p>查找算法</p>
+<p>  🔢 非树查找算法</p>
+<ul>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/search/Binary_Search">二分查找</a></p>
+</li>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/search/Difference_To_Find">差值查找算法</a></p>
+</li>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/search/Fibonacci_Search">斐波那契查找算法</a></p>
+</li>
+</ul>
+<p>  🌲 树查找</p>
+<ul>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/search/tree/Binary_Tree_Search">二叉树查找</a></p>
+</li>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/search/tree/Balanced_B_Tree_Search">平衡二叉树</a></p>
+</li>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/search/tree/Red_Black_Tree_Search">红黑树查找</a></p>
+</li>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/search/tree/B_Tree_Search">B树查找</a></p>
+</li>
+</ul>
+</li>
+<li><p>排序算法</p>
+<ul>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/sort/Bubble_Sort">冒泡排序</a></p>
+</li>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/sort/Select_Sort">选择排序</a></p>
+</li>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/sort/Insertion_Sort">插入排序算法</a></p>
+</li>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/sort/Quicly_Sort">快速排序</a></p>
+</li>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/sort/Merge_Sort">归并排序算法</a></p>
+</li>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/sort/Count_Sort">计数排序</a></p>
+</li>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/sort/Base_Num_Sort">基数排序</a></p>
+</li>
+<li><p><a href="2022/06/26/withe-snake/algorithm/navigation/sort/Heap_Sort">堆排序</a></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>动态规划</p>
+<ul>
+<li><p>基本概念</p>
+<p>  动态规划算法通常用于<strong>求解具有某种最优性质的问题</strong>。在这类问题中，可能会有许多可行解。每一个解都对应于一个值，而我们希望找到具有最优值的解。动态规划算法与分治法类似，<strong>基本思想也是将待求解问题分解成若干个子问题，先求解子问题，然后从这些子问题的解得到原问题的解</strong>。</p>
+<p>  动态规划问题经分解得到的子问题往往不是互相独立的。需要保存已解决的子问题的答案，而在需要时再找出已保存的答案，这样就可以避免大量的重复计算。可以用一个表来记录所有已解的子问题的答案。不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。</p>
+<p>  动态规划有两个重要的概念：</p>
+<ul>
+<li><strong>状态</strong>：解决某一问题的中间结果，它是子问题的一个抽象定义。</li>
+<li><strong>状态转移方程</strong>：状态与状态之间的递推关系。</li>
+</ul>
+<p>  动态规划解题步骤：</p>
+<ol>
+<li>状态定义：找出子问题抽象定义。</li>
+<li>确定状态转移方程：找出状态与状态之间的递推关系。</li>
+<li>初始状态和边界情况：最简单的子问题的结果，也是程序的出口条件 。</li>
+<li>返回值：对于简单问题，返回值可能就是最终状态；对于复杂问题可能还需对最终状态做一些额外处理。</li>
+</ol>
+</li>
+<li><p>示例题目一</p>
+<p>  <strong>题目描述</strong>：假设正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？其中 n 是一个正整数。</p>
+<p>  <strong>示例 1</strong>：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入： 2</span><br><span class="line">输出： 2</span><br><span class="line">解释： 有两种方法可以爬到楼顶。</span><br><span class="line">1. 1 阶 + 1 阶</span><br><span class="line">2. 2 阶</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>  <strong>示例 2</strong>：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入： 3</span><br><span class="line">输出： 3</span><br><span class="line">解释： 有三种方法可以爬到楼顶。</span><br><span class="line">1. 1 阶 + 1 阶 + 1 阶</span><br><span class="line">2. 1 阶 + 2 阶</span><br><span class="line">3. 2 阶 + 1 阶</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>  这道题有两个关键特征：</p>
+<ul>
+<li>要求给出达成某个目的的<strong>解法个数；</strong></li>
+<li>不要求给出每一种解法对应的具体路径。</li>
+</ul>
+<p>  这样的问题往往可以用动态规划进行求解。对于这个问题，每次爬楼梯只有两种情况：</p>
+<ul>
+<li>最后一步爬 1 级台阶，前面有 n - 1 级台阶，这种情况下共有f(n - 1)种方法；</li>
+<li>最后一步爬 2 级台阶，前面有 n - 2 级台阶，这种情况下共有f(n - 2)种方法；</li>
+</ul>
+<p>  f(n) 为以上两种情况之和，即 f(n)&#x3D;f(n-1)+f(n-2)，这就是本题用到的递推关系。下面就根据动态规划的四个步骤来看那一下：</p>
+<ol>
+<li><strong>状态定义</strong>：初始化一个f数组，f[i]表示爬到i级台阶的方法数量；</li>
+<li><strong>状态转移方程</strong>：f(n)&#x3D;f(n-1)+f(n-2)；</li>
+<li><strong>初始状态</strong>：一级台阶时，共1种爬法；两级台阶时，可以一级一级爬，也可以一次爬两级，共有2种爬法。即f[1] &#x3D; 1，f[2] &#x3D; 2；</li>
+<li><strong>返回值</strong>：f[n] ，即 n 级台阶共有多少种爬法。</li>
+</ol>
+<p>  动态规划实现代码如下：</p>
+  <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @param &#123;number&#125; n</span></span><br><span class="line"><span class="comment">* @return &#123;number&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">const</span> climbStairs = function(n) &#123;</span><br><span class="line">    <span class="comment">// 初始化状态数组</span></span><br><span class="line">    <span class="type">const</span> f = [];</span><br><span class="line">    <span class="comment">// 初始化已知值</span></span><br><span class="line">    f[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    f[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">    <span class="comment">// 动态更新每一层楼梯对应的结果</span></span><br><span class="line">    <span class="keyword">for</span>(let i = <span class="number">3</span>;i &lt;= n;i++)&#123;</span><br><span class="line">        f[i] = f[i<span class="number">-2</span>] + f[i<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 返回目标值</span></span><br><span class="line">    <span class="keyword">return</span> f[n];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分析使用场景</p>
+<p>  上面用动态规划的思想解决了<strong>爬楼梯</strong>的问题，当然我们的目的并不是为了解决这个问题，而是通过这个问题来看动态规划，下面就来重新认识一下动态规划。</p>
+<p>  上面说过了分支问题，它的核心思想是：<strong>把一个问题分解为相互独立的子问题，逐个解决子问题后，再组合子问题的答案，就得到了问题的最终解。</strong></p>
+<p>  动态规划的思想和“分治”有点相似。不同之处在于，“分治”思想中，各个子问题之间是独立的：比如说归并排序中，子数组之间的排序并不互相影响。而动态规划划分出的子问题，往往是相互依赖、相互影响的。</p>
+<p>  那什么样的题应该用动态规划来做？要抓以下关键特征：</p>
+<ul>
+<li><strong>最优子结构</strong>，它指的是问题的最优解包含着子问题的最优解——不管前面的决策如何，此后的状态必须是基于当前状态（由上次决策产生）的最优决策。就这道题来说，<code>f(n)</code>和<code>f(n-1)</code>、<code>f(n-2)</code>之间的关系（状态转移方程）印证了这一点。</li>
+<li><strong>重叠子问题</strong>，在递归的过程中，出现了反复计算的情况。</li>
+<li><strong>无后效性</strong>，无后效性有两层含义，第一层含义是，在推导后面阶段的状态的时候，只关心前面阶段的状态值，不关心这个状态是怎么一步一步推导出来的。第二层含义是，某阶段状态一旦确定，就不受之后阶段的决策影响。无后效性是一个非常“宽松”的要求。只要满足前面提到的动态规划问题模型，其实基本上都会满足无后效性。</li>
+</ul>
+<p>  所以，只要需要解决的问题符合这三个关键特征，就可以使用动态规划来求解。</p>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>布局</tag>
+        <tag>导航</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分治法</title>
+    <url>/2022/06/28/withe_snake/algorithm/navigation/divide_and_conquer/index/</url>
+    <content><![CDATA[<p>原理：将大问题转换为一个或多个子问题，知道问题可以轻易解决，最后将子问题的结果进行合并</p>
+<p>策略：对于一个规模为n的问题，若该问题可以容易的解决(比如规模n较小)则直接解决，否则将其分解为k个规模较小的子问题，这些子问题互相独立且与原问题形式相同，递归地解决这些子问题，然后将各个子问题的解合并得到原问题的解。</p>
+<h2 id="分治法使用场景"><a href="#分治法使用场景" class="headerlink" title="分治法使用场景"></a><strong><strong>分治法使用场景</strong></strong></h2><ol>
+<li>该问题的规模缩小到一定的程度就可以容易的解决。</li>
+<li>该问题可以分解为若干个规模较小的相同问题，即该问题具有最优子结构性质。</li>
+<li>利用该问题分解出的子问题的解可以合并为该问题的解。</li>
+<li>该问题所分解出的各个子问题是相互独立的，即子问题之间不包含公共的子问题。</li>
+</ol>
+<blockquote>
+<p>第一条特征是绝大多数问题可以满足的，问题的复杂性一般是随着问题规模的增加而增加；第二条特征是应用分治法的前提。它是大多数问题可以满足的，此特征反映了递归思想的应用。第三条特征是关键，能否利用分治法完全取决于问题是否具有第三条特征，如果具备了第一条和第二条，而不具备第三条特征，则可以考虑使用贪心法或者动态规划法。第四条关系到分治法的效率，如果各个子问题是不独立的则分治法要做寻多不必要的工作，重复的解决公共的子问题，此时虽然可用分治法，但一般使用动态规划法较好。</p>
+</blockquote>
+<h2 id="分治法的基本步骤"><a href="#分治法的基本步骤" class="headerlink" title="分治法的基本步骤"></a><strong>分治法的基本步骤</strong></h2><ul>
+<li>分解：将原问题分解为若干个规模较小，相互独立，与原问题形式相同的子问题</li>
+<li>解决：若子问题规模较小而容易被解决则直接解，否则递归地解各个子问题</li>
+<li>合并：将各个子问题的解合并为原问题的解</li>
+</ul>
+<h2 id="分治法的复杂性分析"><a href="#分治法的复杂性分析" class="headerlink" title="分治法的复杂性分析"></a><strong>分治法的复杂性分析</strong></h2><p>一个分治法将规模为n的问题分成k个规模为n&#x2F;m的子问题去解。设分解阈值<br><img src="http://pic.xishng.top/img/202207050031162.png" alt="分解阈值"></p>
+<p>，且最小子解规模为1的问题消耗一个单位时间。设将原问题分解为k个子问题以及用merge将K个子问题的解合并为原问题的解需用f(n)个单位时间，用T(n)表示该分治法解规模为|P|&#x3D;n的问题所需的计算时间：<br><img src="http://pic.xishng.top/img/202207050031398.png" alt="分支规模——计算时间"></p>
+<h2 id="可以使用分治法求解的一些经典问题"><a href="#可以使用分治法求解的一些经典问题" class="headerlink" title="可以使用分治法求解的一些经典问题"></a><strong>可以使用分治法求解的一些经典问题</strong></h2><ol>
+<li>二分搜索</li>
+<li>大整数乘法</li>
+<li>Strassen矩阵乘法</li>
+<li>棋盘覆盖</li>
+<li>合并排序</li>
+<li>快速排序</li>
+<li>线性时间选择</li>
+<li>最接近点对问题</li>
+<li>循环赛日程表</li>
+<li>汉诺塔</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>分治</tag>
+        <tag>原理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基数排序</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/sort/Base_Num_Sort/</url>
+    <content><![CDATA[<h1 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h1><p>基数排序是一种对整数进行排序的排序算法，它的做法是首先对待排序列的个位进行按位插入，即是：如果一个数字的个位为1则插入1所对应的位置，其他的同理。然后对十位，一直到所有数字里面的最高位为止，这个排序才算完成。</p>
+<p>具体的操作我用下面的示意图进行说明：</p>
+<p><img src="http://pic.xishng.top/img/202201171550988.webp" alt="基数排序示意图"></p>
+<p>基数排序示意图</p>
+<p>上图中我们设置了一个待排序的整数数列为 10， 1， 18， 7， 17， 23， 9， 26， 16， 8.</p>
+<p>第一个需要设置循环次数，也就是我们上面所说的待排序列的最大数的位数。在这个例子里面是2.</p>
+<p>然后进行按位插入，譬如10的个位为0，则插入到index&#x3D;0 的那一行；1的个位为1，插入到index&#x3D;1的那一行；18的个位为8，插入到index&#x3D;8的那一行； …… 以此类推，得到一个中间数组如上图中 中间的那个绿色的数组。然后进行第二次按位插入，譬如10的十位为1，则插入到index&#x3D;1的位置；1的十位为0，插入到index&#x3D;0的为止，以此类推，循环终止，得到最终的排序完毕的结果。</p>
+<p>下面是golang的代码实现：</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">RadixSort</span><span class="params">(nums []<span class="type">int</span>)</span></span> []<span class="type">int</span>  &#123;</span><br><span class="line">	numberBit := howManyBit(maximum(nums))</span><br><span class="line">	<span class="comment">// 循环的次数</span></span><br><span class="line">	<span class="comment">// 定义一个rec 二维切片 rec[i][x] 用来接受尾数是 i的数字</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; numberBit; i++ &#123;</span><br><span class="line">		rec := <span class="built_in">make</span>([][]<span class="type">int</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> _, num := <span class="keyword">range</span> nums &#123;</span><br><span class="line">			rec[(num/pow10(i))%<span class="number">10</span>] = <span class="built_in">append</span>(rec[(num/pow10(i))%<span class="number">10</span>], num)</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// flatten the rec slice to the one dimension slice</span></span><br><span class="line">		numsCopy := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">for</span> j := <span class="number">0</span>; j &lt; <span class="number">10</span>; j++ &#123;</span><br><span class="line">			numsCopy = <span class="built_in">append</span>(numsCopy, rec[j]...)</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// refresh nums，使得他变为 经过一次基数排序之后的数组</span></span><br><span class="line">		nums = numsCopy</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> nums</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">pow10</span><span class="params">(num <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	res := <span class="number">1</span></span><br><span class="line">	base := <span class="number">10</span></span><br><span class="line">	<span class="keyword">for</span> num != <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> num&amp;<span class="number">1</span> ==<span class="number">1</span> &#123;</span><br><span class="line">			num -= <span class="number">1</span></span><br><span class="line">			res *= base</span><br><span class="line">		&#125;</span><br><span class="line">		num &gt;&gt;= <span class="number">1</span></span><br><span class="line">		base *= base</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">maximum</span><span class="params">(list []<span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	max := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> _, i2 := <span class="keyword">range</span> list &#123;</span><br><span class="line">		<span class="keyword">if</span> i2 &gt; max &#123;</span><br><span class="line">			max = i2</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> max</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">howManyBit</span><span class="params">(number <span class="type">int</span>)</span></span> <span class="type">int</span>  &#123;</span><br><span class="line">	count := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> number != <span class="number">0</span> &#123;</span><br><span class="line">		number = number/<span class="number">10</span></span><br><span class="line">		count += <span class="number">1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> count</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> theArray = []<span class="type">int</span>&#123;<span class="number">10</span>, <span class="number">1</span>, <span class="number">18</span>, <span class="number">30</span>, <span class="number">23</span>, <span class="number">12</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">18</span>, <span class="number">233</span>, <span class="number">144</span>&#125;</span><br><span class="line">	fmt.Print(<span class="string">&quot;排序前&quot;</span>)</span><br><span class="line">	fmt.Println(theArray)</span><br><span class="line">	fmt.Print(<span class="string">&quot;排序后&quot;</span>)</span><br><span class="line">	fmt.Println(RadixSort(theArray))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序算法</category>
+      </categories>
+      <tags>
+        <tag>排序算法</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>冒泡排序算法</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/sort/Bubble_Sort/</url>
+    <content><![CDATA[<h1 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h1><blockquote>
+<p>方法的原理：冒泡排序算法清楚地演示了排序是如何工作的，同时又简单易懂。冒泡排序步骤遍历列表并比较相邻的元素对。如果元素顺序错误，则交换它们。重复遍历列表未排序部分的元素，直到完成列表排序。<br>简单点来讲冒泡排序算法主要思想就是每一次确定一个值。如果是从左开始比较就是通过两两比较找到最大值。如果是从右开始比较就是两两比较找到最小值。 如下图所示</p>
+</blockquote>
+<blockquote>
+<p>时间复杂度：因为冒泡排序重复地通过列表的未排序部分，所以它具有最坏的情况复杂度O(n^2)。</p>
+</blockquote>
+<p><img src="http://pic.xishng.top/img/202201171537392.gif" alt="冒泡排序示意图"></p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    values := []<span class="type">int</span>&#123;<span class="number">5</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">2</span>,<span class="number">4</span>&#125;</span><br><span class="line">    fmt.Println(values)</span><br><span class="line">    BubbleAsort(values)</span><br><span class="line">    BubbleZsort(values)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BubbleAsort</span><span class="params">(values []<span class="type">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(values)<span class="number">-1</span>; i++ &#123;</span><br><span class="line">        <span class="keyword">for</span> j := i+<span class="number">1</span>; j &lt; <span class="built_in">len</span>(values); j++ &#123;</span><br><span class="line">            <span class="keyword">if</span>  values[i]&gt;values[j]&#123;</span><br><span class="line">                values[i],values[j] = values[j],values[i]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(values)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BubbleZsort</span><span class="params">(values []<span class="type">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(values)<span class="number">-1</span>; i++ &#123;</span><br><span class="line">        <span class="keyword">for</span> j := i+<span class="number">1</span>; j &lt; <span class="built_in">len</span>(values); j++ &#123;</span><br><span class="line">            <span class="keyword">if</span>  values[i]&lt;values[j]&#123;</span><br><span class="line">                values[i],values[j] = values[j],values[i]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(values)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序算法</category>
+      </categories>
+      <tags>
+        <tag>排序算法</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计数排序</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/sort/Count_Sort/</url>
+    <content><![CDATA[<h1 id="计数排序"><a href="#计数排序" class="headerlink" title="计数排序"></a>计数排序</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>计数排序的核心在于将输入的数据值转化为键存储在额外开辟的数组空间中。作为一种线性时间复杂度的排序，计数排序要求输入的数据必须是有确定范围的整数。</p>
+<h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p>计数排序和基数排序都是非比较类排序，过程比较简单，但是计数是比较巧妙的，借助第三个数组 <code>countsArr</code>  存元素出现的频率往后累加，对应减一即可得出该元素在排序数组中的位置。</p>
+<h2 id="算法复杂度"><a href="#算法复杂度" class="headerlink" title="算法复杂度"></a>算法复杂度</h2><p>时间复杂度为 ：O(N + max + 1)</p>
+<h2 id="排序过程"><a href="#排序过程" class="headerlink" title="排序过程"></a>排序过程</h2><p><img src="http://pic.xishng.top/img/202201171546782.gif" alt="计数排序示意图"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[UNSORTED]:      [1 4 2 4 6 9 8 2]</span><br><span class="line">[DEBUG countsArr]:  [0 1 3 3 5 5 6 6 7 8]</span><br><span class="line">[SORTED]:        [1 2 2 4 4 6 8 9]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="实用场景"><a href="#实用场景" class="headerlink" title="实用场景"></a>实用场景</h2><p>计数排序的复杂度比任何基于比较的排序都要低，不过空间开销不容忽视。</p>
+<h1 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h1><figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;algorithms&quot;</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	arr := algorithms.GetArr(<span class="number">5</span>, <span class="number">20</span>)</span><br><span class="line">	<span class="comment">//arr = []int&#123;1, 4, 2, 4, 6, 9, 8, 2&#125;</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;[UNSORTED]:\\t&quot;</span>, arr)</span><br><span class="line"></span><br><span class="line">	max := getMax(arr)</span><br><span class="line">	sortedArr := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="built_in">len</span>(arr))</span><br><span class="line">	countsArr := <span class="built_in">make</span>([]<span class="type">int</span>, max+<span class="number">1</span>) <span class="comment">// max+1 是为了防止 countsArr[] 计数时溢出</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 元素计数</span></span><br><span class="line">	<span class="keyword">for</span> _, v := <span class="keyword">range</span> arr &#123;</span><br><span class="line">		countsArr[v]++</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 统计独特数字个数并累加</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt;= max; i++ &#123;</span><br><span class="line">		countsArr[i] += countsArr[i<span class="number">-1</span>]</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;[DEBUG countsArr]:\\t&quot;</span>, countsArr)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 让 arr 中每个元素找到其位置</span></span><br><span class="line">	<span class="keyword">for</span> _, v := <span class="keyword">range</span> arr &#123;</span><br><span class="line">		sortedArr[countsArr[v]<span class="number">-1</span>] = v</span><br><span class="line">		<span class="comment">//fmt.Print(countsArr[v]-1, &quot; &quot;)</span></span><br><span class="line">		<span class="comment">// 保证稳定性</span></span><br><span class="line">		countsArr[v]--</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//fmt.Println()</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;[SORTED]:\\t&quot;</span>, sortedArr)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getMax</span><span class="params">(arr []<span class="type">int</span>)</span></span> (max <span class="type">int</span>) &#123;</span><br><span class="line">	max = arr[<span class="number">0</span>]</span><br><span class="line">	<span class="keyword">for</span> _, v := <span class="keyword">range</span> arr &#123;</span><br><span class="line">		<span class="keyword">if</span> max &lt; v &#123;</span><br><span class="line">			max = v</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序算法</category>
+      </categories>
+      <tags>
+        <tag>排序算法</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>堆排序</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/sort/Heap_Sort/</url>
+    <content><![CDATA[<h1 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h1><p>堆分为最小堆和最大堆两种，我们这里只记录下最小堆：</p>
+<p><img src="http://pic.xishng.top/img/202201171553440.jpg" alt="最小堆排序，插入元素"></p>
+<p>最小堆排序，插入元素</p>
+<p><img src="http://pic.xishng.top/img/202201171553439.gif" alt="堆排序示意图"></p>
+<p>代码实现：</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">heapsort</span><span class="params">(nums []<span class="type">int</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">	lenght := <span class="built_in">len</span>(nums)</span><br><span class="line">	<span class="keyword">if</span> lenght == <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; lenght; i++ &#123;</span><br><span class="line">		<span class="comment">// 第一下 使得第一个元素最小，接下来就从第二个来构造，使得下一个最小，</span></span><br><span class="line">		miniHeap(nums[i:])</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> nums</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使得每次操作完毕 堆顶的元素就是最小的，由于堆的特性，我们只需要从倒数第二层开始就可以了</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">miniHeap</span><span class="params">(nums []<span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	length := <span class="built_in">len</span>(nums)</span><br><span class="line">	floor := length/<span class="number">2</span> - <span class="number">1</span></span><br><span class="line">	<span class="keyword">for</span> i := floor; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">		<span class="comment">// 然后比较的每一个节点与其两个孩子节点的大小，使得爸爸永远是最小的</span></span><br><span class="line">		<span class="comment">// 有一种特殊情况，就是最后一个节点的孩子节点可能不存在，和可能只有一个，所以需要加上一个判断</span></span><br><span class="line">		baba := i</span><br><span class="line">		left := <span class="number">2</span>*i + <span class="number">1</span></span><br><span class="line">		right := <span class="number">2</span>*i + <span class="number">2</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> right &lt; length &amp;&amp; nums[baba] &gt; nums[right] &#123;</span><br><span class="line">			nums[baba], nums[right] = nums[right], nums[baba]</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> left &lt; length &amp;&amp; nums[baba] &gt; nums[left] &#123;</span><br><span class="line">			nums[baba], nums[left] = nums[left], nums[baba]</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//if left &lt; length &amp;&amp; right &lt; length &amp;&amp; nums[left] &gt; nums[right]&#123;</span></span><br><span class="line">		<span class="comment">//	nums[left], nums[right] = nums[right], nums[left]</span></span><br><span class="line">		<span class="comment">//&#125;</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">top10</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 30 * 10 = 300</span></span><br><span class="line">	bigData := []<span class="type">int</span>&#123;</span><br><span class="line">		<span class="number">3</span>, <span class="number">231</span>, <span class="number">321</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">45</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">23</span>,</span><br><span class="line">		<span class="number">1</span>, <span class="number">31</span>, <span class="number">23</span>, <span class="number">1</span>, <span class="number">312</span>, <span class="number">67</span>, <span class="number">45</span>, <span class="number">3</span>, <span class="number">43</span>, <span class="number">435</span>,</span><br><span class="line">		<span class="number">32</span>, <span class="number">13</span>, <span class="number">56</span>, <span class="number">78</span>, <span class="number">500</span>, <span class="number">467</span>, <span class="number">321</span>, <span class="number">543</span>, <span class="number">23</span>, <span class="number">10</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">67</span>, <span class="number">8</span>, <span class="number">45</span>, <span class="number">87</span>, <span class="number">32</span>, <span class="number">78</span>, <span class="number">4</span>, <span class="number">90</span>, <span class="number">45</span>, <span class="number">34</span>,</span><br><span class="line">		<span class="number">32</span>, <span class="number">13</span>, <span class="number">56</span>, <span class="number">78</span>, <span class="number">510</span>, <span class="number">467</span>, <span class="number">321</span>, <span class="number">543</span>, <span class="number">23</span>, <span class="number">11</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">301</span>, <span class="number">43</span>, <span class="number">55</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">31</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">4</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">4</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">2</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">4</span>, <span class="number">65</span>, <span class="number">7</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">5</span>, <span class="number">65</span>, <span class="number">6</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">301</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">4</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">712</span>, <span class="number">32</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">7</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">612</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">512</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">401</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">212</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">1</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">371</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">453</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">554</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">172</span>, <span class="number">32</span>, <span class="number">301</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">192</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">564</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">142</span>, <span class="number">32</span>, <span class="number">321</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">12</span>, <span class="number">32</span>, <span class="number">21</span>, <span class="number">321</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">605</span>, <span class="number">76</span>, <span class="number">45</span>,</span><br><span class="line">		<span class="number">12</span>, <span class="number">122</span>, <span class="number">632</span>, <span class="number">321</span>, <span class="number">301</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">495</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(<span class="string">&quot;the big data is &quot;</span>, bigData)</span><br><span class="line">	startNums := bigData[:<span class="number">10</span>]</span><br><span class="line">	miniHeap(startNums)</span><br><span class="line">	<span class="keyword">for</span> _, data := <span class="keyword">range</span> bigData[<span class="number">10</span>:] &#123;</span><br><span class="line">		<span class="keyword">if</span> data &lt;= startNums[<span class="number">0</span>] &#123;</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			startNums[<span class="number">0</span>] = data</span><br><span class="line">			miniHeap(startNums)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(<span class="string">&quot;top10 is &quot;</span>, heapsort(startNums))</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>from: <a href="https://zhuanlan.zhihu.com/p/366379441">golang:排序-堆排序-解决百万数据top100问题</a></p>
+]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序算法</category>
+      </categories>
+      <tags>
+        <tag>排序算法</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>插入排序算法</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/sort/Insertion_Sort/</url>
+    <content><![CDATA[<h1 id="插入排序算法"><a href="#插入排序算法" class="headerlink" title="插入排序算法"></a>插入排序算法</h1><blockquote>
+<p>算法思想：左端的数字已经完成排序。取出那些尚未操作的最左端的数字将这个数字与已经完成排序的数字进行比较如果左边的数字较大则交换两个数字的位置。重复此操作直到出现一个比当前较小的数字或者数字已经到达最左端。 如下图所示</p>
+</blockquote>
+<blockquote>
+<p>时间复杂度：最坏情况下时间复杂度为O(n^2)。最好情况下为O(n)</p>
+</blockquote>
+<p><img src="https://pic.xishng.top/img/202201171539001.gif" alt="插入排序示意图"></p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    numbers := []<span class="type">int</span>&#123;<span class="number">6</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>&#125;</span><br><span class="line">    InsertSort(numbers)</span><br><span class="line"></span><br><span class="line">    fmt.Println(numbers)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InsertSort</span><span class="params">(values []<span class="type">int</span>)</span></span> &#123;</span><br><span class="line">    length := <span class="built_in">len</span>(values)</span><br><span class="line">    <span class="keyword">if</span> length &lt;= <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">1</span>; i &lt; length; i++ &#123;</span><br><span class="line">        tmp := values[i] <span class="comment">// 从第二个数开始，从左向右依次取数</span></span><br><span class="line">        key := i - <span class="number">1</span>     <span class="comment">// 下标从0开始，依次从左向右</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 每次取到的数都跟左侧的数做比较，如果左侧的数比取的数大，就将左侧的数右移一位，直至左侧没有数字比取的数大为止</span></span><br><span class="line">        <span class="keyword">for</span> key &gt;= <span class="number">0</span> &amp;&amp; tmp &lt; values[key] &#123;</span><br><span class="line">            values[key+<span class="number">1</span>] = values[key]</span><br><span class="line">            key--</span><br><span class="line">            <span class="comment">//fmt.Println(values)</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将取到的数插入到不小于左侧数的位置</span></span><br><span class="line">        <span class="keyword">if</span> key+<span class="number">1</span> != i &#123;</span><br><span class="line">            values[key+<span class="number">1</span>] = tmp</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//fmt.Println(values)</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序算法</category>
+      </categories>
+      <tags>
+        <tag>排序算法</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>归并排序算法</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/sort/Merge_Sort/</url>
+    <content><![CDATA[<h1 id="归并排序算法"><a href="#归并排序算法" class="headerlink" title="归并排序算法"></a>归并排序算法</h1><blockquote>
+<p>算法思想：</p>
+<ul>
+<li><strong>第一步</strong>：将数字分成两半，重复此步骤直到每个数字成为一部分。</li>
+<li><strong>第二步</strong>：合并数字，合并时按照数字的升序移动，使得合并后的数字在组内按升序排列。递归的重复组的合并操作，直到所有数字都在一个组中。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>时间复杂度：O(nlogn)</p>
+</blockquote>
+<p><img src="http://pic.xishng.top/img/202201171542031.gif" alt="归并排序示意图"></p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 生成排序队列</span></span><br><span class="line">	length := <span class="number">20</span></span><br><span class="line">	A := <span class="built_in">make</span>([]<span class="type">int</span>, length)</span><br><span class="line">	j := length</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; length; i++ &#123;</span><br><span class="line">		A[i] = j</span><br><span class="line">		j--</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 打印输出前的队列</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;排序前&quot;</span>, A)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//进行排序</span></span><br><span class="line">	MergeSort(A, <span class="number">0</span>, length<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 打进排序后的队列</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;排序后&quot;</span>, A)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">MergeSort 归并排序</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">MergeSort</span><span class="params">(Arrary []<span class="type">int</span>, left <span class="type">int</span>, right <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> left &lt; right &#123;</span><br><span class="line">		median := <span class="number">0</span></span><br><span class="line">		<span class="keyword">if</span> (right-median+<span class="number">1</span>)%<span class="number">2</span> == <span class="number">0</span> &#123;</span><br><span class="line">			median = (left + right - <span class="number">1</span>) / <span class="number">2</span></span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			median = (left + right) / <span class="number">2</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		MergeSort(Arrary, left, median)</span><br><span class="line">		MergeSort(Arrary, median+<span class="number">1</span>, right)</span><br><span class="line">		Merge(Arrary, left, median, right)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Merge 两列已排序的数组合并</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Merge</span><span class="params">(Arrary []<span class="type">int</span>, left <span class="type">int</span>, median <span class="type">int</span>, right <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	n1 := median - left + <span class="number">1</span></span><br><span class="line">	n2 := right - median</span><br><span class="line"></span><br><span class="line">	L_Arr := <span class="built_in">make</span>([]<span class="type">int</span>, n1+<span class="number">1</span>)</span><br><span class="line">	R_Arr := <span class="built_in">make</span>([]<span class="type">int</span>, n2+<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n1; i++ &#123;</span><br><span class="line">		L_Arr[i] = Arrary[left+i]</span><br><span class="line">	&#125;</span><br><span class="line">	L_Arr[n1] = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n2; i++ &#123;</span><br><span class="line">		R_Arr[i] = Arrary[median+<span class="number">1</span>+i]</span><br><span class="line">	&#125;</span><br><span class="line">	R_Arr[n2] = <span class="number">1000</span></span><br><span class="line">	leftNum := <span class="number">0</span></span><br><span class="line">	rightNum := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> i := left; i &lt; right+<span class="number">1</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">if</span> L_Arr[leftNum] &lt; R_Arr[rightNum] &#123;</span><br><span class="line">			Arrary[i] = L_Arr[leftNum]</span><br><span class="line">			leftNum++</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			Arrary[i] = R_Arr[rightNum]</span><br><span class="line">			rightNum++</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序算法</category>
+      </categories>
+      <tags>
+        <tag>排序算法</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>快速排序算法</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/sort/Quicly_Sort/</url>
+    <content><![CDATA[<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><blockquote>
+<p>算法思想：快速排序算法与其他算法相比，它的特点是数字比较和交换的次数较少，在许多情况下可以高速地进行排序。</p>
+<ul>
+<li><strong>第一步</strong>：选择数列中的一个数字作为排序的基准，这个数字被称为pivot。pivot通常选择一个随机的数字，在这里我们默认选择最右边的数字作为pivot。我们把这个数字做个标记记为p。</li>
+<li><strong>第二步</strong>：在最左边的数字上标记为左标记，最右边的数字标记为右标记。快速排序是一种使用这些标记递归的重复一系列操作的算法。</li>
+<li><strong>第三步</strong>：我们将左边的标记像右移动，当左边的标记的数字超过了pivot的数字时，停止移动。之后将右标记向左移动，当右标记的数字小于pivot时停止移动。当左右侧的标记都停止时，交换这两个数字的位置。（左标记的作用是找到一个大于pivot的数字，右标记是找到小于pivot的数字，通过交换数字可以在数列的左侧收集小于pivot的数字，右侧收集大于pivot的数字）。交换之后重复第二步操作。（ 情况1:当左标记找到比pivot大的数字 停止移动，右标记开始移动并且碰到了左标记所在的位置。则将当前位置的数字和pivot位置进行交换。情况2:当左标记移动和右标记碰撞时并不会停止移动，当左标记达到数列最右边时停止移动，这意味着pivot数字在这个数列里是最大值）</li>
+<li><strong>第四步</strong>：因为pivot已经找到了数列中的位置，则对pivot左侧和右侧的数列 分成两部分并递归的执行前三步的步骤。（当操作的数列只有一个数字 则认为已经完成了排序）</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>时间复杂度：最坏情况为O(n^2) 最好情况O(nlog(n)) 平均情况为O(nlogn)</p>
+</blockquote>
+<p><img src="http://pic.xishng.top/img/202201171540228.gif" alt="快速排序示意图"></p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	快读排序</span></span><br><span class="line"><span class="comment">	快排的思想 就是定一个目标值 确定这个目标值的位置 之后在对目标值两侧的数组</span></span><br><span class="line"><span class="comment">	递归的进行上述操作</span></span><br><span class="line"><span class="comment">	时间复杂度是最快和平均O(nlogn)  最慢 O(n^2)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">quickSort</span><span class="params">(array []<span class="type">int</span>, start, end <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> start &lt; end &#123;</span><br><span class="line"></span><br><span class="line">		left := start</span><br><span class="line">		right := end</span><br><span class="line">		pivot := array[start]</span><br><span class="line">		<span class="keyword">for</span> left &lt; right &#123;</span><br><span class="line">			<span class="keyword">for</span> left &lt; right &amp;&amp; array[right] &gt;= pivot &#123;</span><br><span class="line">				right--</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> left &lt; right &#123;</span><br><span class="line">				array[left] = array[right]</span><br><span class="line">				left++</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">for</span> left &lt; right &amp;&amp; array[left] &lt;= pivot &#123;</span><br><span class="line">				left++</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> left &lt; right &#123;</span><br><span class="line">				array[right] = array[left]</span><br><span class="line">				right--</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		array[left] = pivot</span><br><span class="line">		quickSort(array, start, left<span class="number">-1</span>)</span><br><span class="line">		quickSort(array, left+<span class="number">1</span>, end)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(array, <span class="string">&quot;返回排序之后的array数组&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	arrayList := []<span class="type">int</span>&#123;<span class="number">5</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">8</span>&#125;</span><br><span class="line">	quickSort(arrayList, <span class="number">0</span>, <span class="built_in">len</span>(arrayList)<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序算法</category>
+      </categories>
+      <tags>
+        <tag>排序算法</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>选择排序算法</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/sort/Select_Sort/</url>
+    <content><![CDATA[<h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><blockquote>
+<p>算法思想：线性搜索数列并找到最小值。将最小值替换为数列中最左端的数字并进行排序。如果最小值已经在最左端则不进行操作。重复此操作直到数列排序完成。<br>简单来说就是每次找到数列的最小值并和最左端还没确定的值进行替换。也可以找最大值和最右端没确定的值替换。 如下图所示</p>
+</blockquote>
+<blockquote>
+<p>时间复杂度：最坏时间复杂度：O(n^2)。</p>
+</blockquote>
+<p><img src="http://pic.xishng.top/img/202201171538702.gif" alt="选择排序示意图"></p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    numbers := []<span class="type">int</span>&#123;<span class="number">6</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">9</span>&#125;</span><br><span class="line">    SelectSort(numbers)</span><br><span class="line"></span><br><span class="line">    fmt.Println(numbers)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SelectSort</span><span class="params">(values []<span class="type">int</span>)</span></span> &#123;</span><br><span class="line">    length := <span class="built_in">len</span>(values)</span><br><span class="line">    <span class="keyword">if</span> length &lt;= <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; length; i++ &#123;</span><br><span class="line">        min := i <span class="comment">// 初始的最小值位置从0开始，依次向右</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从i右侧的所有元素中找出当前最小值所在的下标</span></span><br><span class="line">        <span class="keyword">for</span> j := length - <span class="number">1</span>; j &gt; i; j-- &#123;</span><br><span class="line">            <span class="keyword">if</span> values[j] &lt; values[min] &#123;</span><br><span class="line">                min = j</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//fmt.Printf(&quot;i:%d min:%d\\n&quot;, i, min)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 把每次找出来的最小值与之前的最小值做交换</span></span><br><span class="line">        values[i], values[min] = values[min], values[i]</span><br><span class="line"></span><br><span class="line">        <span class="comment">//fmt.Println(values)</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序算法</category>
+      </categories>
+      <tags>
+        <tag>排序算法</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二分查找算法</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/search/commonly_used/Binary_Search/</url>
+    <content><![CDATA[<h1 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h1><p><strong>二分查找法</strong>，在一个<strong>有序的数列</strong>里，把中间元素v与查找元素target相比较：</p>
+<ul>
+<li>若相等则返回</li>
+<li>若大于target则在v的右端继续使用二分查找法</li>
+<li>若小于target则在v的左端继续使用二分查找法</li>
+</ul>
+<p><img src="http://pic.xishng.top/img/202201171718949.png" alt="示意图"></p>
+<p>示例代码如下：</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//二分查找（前提必须在有序的数组里，查找target）</span></span><br><span class="line"><span class="comment">//如果找到target，返回相应的索引index</span></span><br><span class="line"><span class="comment">//如果没有找到target，返回-1</span></span><br><span class="line"><span class="comment">//时间复杂度O(logN)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">binarySearch</span><span class="params">(arr *[]<span class="type">int</span>, target <span class="type">int</span>, l <span class="type">int</span>, r <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="comment">//在arr[l...r]中查找target</span></span><br><span class="line">	<span class="keyword">for</span> l &lt;= r &#123;</span><br><span class="line">		<span class="comment">//middleIndex := r+l/2 //注意：这里容易产生bug（r+l溢出int最大值）,改写成如下方式</span></span><br><span class="line">		middleIndex := l + (r-l)/<span class="number">2</span></span><br><span class="line">		<span class="keyword">if</span> (*arr)[middleIndex] == target &#123;</span><br><span class="line">			<span class="keyword">return</span> middleIndex</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span> (*arr)[middleIndex] &gt; target &#123;</span><br><span class="line">			<span class="comment">//在arr[l...middleIndex - 1]中查找target</span></span><br><span class="line">			r = middleIndex - <span class="number">1</span></span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">//在arr[middleIndex + 1...r]中查找target</span></span><br><span class="line">			l = middleIndex + <span class="number">1</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	arr := []<span class="type">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">11</span>,<span class="number">13</span>&#125;</span><br><span class="line">	index := binarySearch(&amp;arr, <span class="number">11</span>,<span class="number">0</span>, <span class="built_in">len</span>(arr)<span class="number">-1</span>)</span><br><span class="line">	fmt.Println(index)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>查找算法</category>
+        <category>通用查找</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>查找算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>插值查找算法</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/search/commonly_used/Difference_To_Find/</url>
+    <content><![CDATA[<h1 id="差值查找算法"><a href="#差值查找算法" class="headerlink" title="差值查找算法"></a>差值查找算法</h1><blockquote>
+<p>折半查找的进化版，自适应中间值 根据 (关键值 - 起始值) &#x2F; (末位值 - 起始值) 的比例来决定中间值的下标，这样能够快速的缩小查找范围，会比直接折半好很多</p>
+</blockquote>
+<blockquote>
+<p>适用场景：</p>
+<blockquote>
+<p>有序的，非动态的序列</p>
+</blockquote>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">insertSearch</span><span class="params">(arr []<span class="type">int</span>, key <span class="type">int</span>)</span></span> <span class="type">int</span>&#123;</span><br><span class="line">	low  := <span class="number">0</span></span><br><span class="line">	high := <span class="built_in">len</span>(arr) - <span class="number">1</span></span><br><span class="line">	time := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> low &lt; high &#123;</span><br><span class="line">		time += <span class="number">1</span></span><br><span class="line">		<span class="comment">// 计算mid值是插值算法的核心代码 实际上就是</span></span><br><span class="line">		mid := low + <span class="type">int</span>((high - low) * (key - arr[low])/(arr[high] - arr[low]))</span><br><span class="line">		<span class="keyword">if</span> key &lt; arr[mid] &#123;</span><br><span class="line">			high = mid - <span class="number">1</span></span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span> key &gt; arr[mid] &#123;</span><br><span class="line">			low = mid + <span class="number">1</span></span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> mid</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>查找算法</category>
+        <category>通用查找</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>查找算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>斐波那契查找算法（黄金分割查找）</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/search/commonly_used/Fibonacci_Search/</url>
+    <content><![CDATA[<h1 id="斐波那契查找算法"><a href="#斐波那契查找算法" class="headerlink" title="斐波那契查找算法"></a>斐波那契查找算法</h1><blockquote>
+<p>在介绍斐波那契查找算法之前，我们先介绍一下很它紧密相连并且大家都熟知的一个概念：黄金分割。</p>
+<p>黄金比例又称<strong>黄金分割</strong>，是指事物各部分间一定的数学比例关系，即将整体一分为二，较大部分与较小部分之比等于整体与较大部分之比，其比值约为1:0.618或1.618:1。</p>
+<blockquote>
+<p>0.618 被公认为最具有审美意义的比例数字，斐波那契数列：1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89…….（从第三个数开始，后边每一个数都是前两个数的和）。然后我们会发现，随着斐波那契数列的递增，前后两个数的比值会越来越接近0.618，利用这个特性，我们就可以将黄金比例运用到查找技术中。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>也是二分查找的一种提升算法，通过运用黄金比例的概念在数列中选择查找点进行查找，提高查找效率。同样地，斐波那契查找也属于一种有序查找算法。</p>
+<p>适用场景：</p>
+<blockquote>
+<p>有序的，非动态的序列</p>
+</blockquote>
+</blockquote>
+<p><img src="http://pic.xishng.top/img/202201171138059.jpg" alt="示意图"></p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">基本思想：利用黄金分割 0.618 ：1 来确定中间值；也是二分查找一种改进版</span></span><br><span class="line"><span class="comment">用文字来说，就是费波那契数列由0和1开始，之后的费波那契系数就是由之前的两数相加而得出。</span></span><br><span class="line"><span class="comment">0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233…… 特别指出：0不是第一项，而是第零项</span></span><br><span class="line"><span class="comment">数列的值为: F(0)=0，F(1)=1, F(n)=F(n-1)+F(n-2)（n&gt;=2，n∈N*） n为数组下标</span></span><br><span class="line"><span class="comment">	|--------------- F(K)-1 ---------------|</span></span><br><span class="line"><span class="comment">	low					  mid        high</span></span><br><span class="line"><span class="comment">	|______________________|_______________|</span></span><br><span class="line"><span class="comment">	|------- F(K-1)-1 -----|--- F(K-2)-1 --|</span></span><br><span class="line"><span class="comment">他要求开始表中记录的个数为某个斐波那契数小1，即n = F(k)-1；开始将key值（要查找的数据）与第F(k-1)位置的记录进行比较(即mid = low + F(k-1) - 1)，比较结果也分为三种：</span></span><br><span class="line"><span class="comment">  （1）相等，mid位置的元素即为所求；</span></span><br><span class="line"><span class="comment">  （2）大于，low=mid+1，k-=2。说明：low=mid+1 :说明待查找的元素在[mid+1,high]范围内，k-=2 :说明范围[mid+1,high]内的元素个数为n-(F(k-1))= Fk-1-F(k-1)=Fk-F(k-1)-1=F(k-2)-1个，所以可以递归的应用斐波那契查找。</span></span><br><span class="line"><span class="comment">  （3）小于，high=mid-1，k-=1。说明：low=mid+1说明待查找的元素在[low,mid-1]范围内，k-=1 说明范围[low,mid-1]内的元素个数为F(k-1)-1个，所以可以递归 的应用斐波那契查找</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fibonacciSearch</span> <span class="params">(arr []<span class="type">int</span>, key <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="comment">// 生成裴波那契数列，因为我们要满足 len(arr) = F(k) - 1</span></span><br><span class="line">	fibArr := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>)</span><br><span class="line">	<span class="comment">// 因为 斐波那契数列的性质我们知道数据递增的特别快，所以我们这里随机选择 生成的数列长度 36 够用了</span></span><br><span class="line">	<span class="comment">// [0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711 28657 46368 75025 121393 196418 317811 514229 832040 1346269 2178309 3524578 5702887 9227465 14930352]</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt;= <span class="number">36</span>; i++ &#123;</span><br><span class="line">		fibArr = <span class="built_in">append</span>(fibArr, fibonacci(i))</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//fmt.Println(fibArr)</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 确定待查找数组在裴波那契数列的位置</span></span><br><span class="line">	k := <span class="number">0</span></span><br><span class="line">	n := <span class="built_in">len</span>(arr)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 此处 n &gt; fib[k]-1 也是别有深意的</span></span><br><span class="line">	<span class="comment">// 若n恰好是裴波那契数列上某一项，且要查找的元素正好在最后一位，此时必须将数组长度填充到数列下一项的数字</span></span><br><span class="line">	<span class="keyword">for</span> n &gt; fibArr[k]<span class="number">-1</span> &#123;</span><br><span class="line">		k = k + <span class="number">1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//fmt.Println(k, fibArr[k])</span></span><br><span class="line">	<span class="comment">// 将待查找数组填充到指定的长度</span></span><br><span class="line">	<span class="keyword">for</span> i := n; i &lt; fibArr[k]; i++ &#123;</span><br><span class="line">		arr = <span class="built_in">append</span>(arr, <span class="number">0</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	low, high := <span class="number">0</span>, n<span class="number">-1</span></span><br><span class="line">	<span class="keyword">for</span> low &lt;= high &#123;</span><br><span class="line">		<span class="comment">// 获取黄金分割位置元素下标</span></span><br><span class="line">		mid := low + fibArr[k<span class="number">-1</span>] - <span class="number">1</span></span><br><span class="line">		<span class="keyword">if</span> key &lt; arr[mid] &#123;</span><br><span class="line">			<span class="comment">// 若key比这个元素小, 则key值应该在low至mid - 1之间，剩下的范围个数为F(k-1) - 1</span></span><br><span class="line">			high = mid - <span class="number">1</span></span><br><span class="line">			k -= <span class="number">1</span></span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span> key &gt; arr[mid] &#123;</span><br><span class="line">			<span class="comment">// 若key比这个元素大, 则key至应该在mid + 1至high之间，剩下的元素个数为F(k) - F(k-1) - 1 = F(k-2) - 1</span></span><br><span class="line">			low = mid + <span class="number">1</span></span><br><span class="line">			k -= <span class="number">2</span></span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> mid &lt; n &#123;</span><br><span class="line">				<span class="keyword">return</span> mid</span><br><span class="line">			&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> n - <span class="number">1</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">生成 斐波那契数列</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 最屌写法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fibonacci</span><span class="params">(n <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> n &lt; <span class="number">2</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> n</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> fibarry = [<span class="number">3</span>]<span class="type">int</span>&#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">2</span>; i &lt;= n; i++ &#123;</span><br><span class="line">		fibarry[<span class="number">2</span>] = fibarry[<span class="number">0</span>] + fibarry[<span class="number">1</span>]</span><br><span class="line">		fibarry[<span class="number">0</span>] = fibarry[<span class="number">1</span>]</span><br><span class="line">		fibarry[<span class="number">1</span>] = fibarry[<span class="number">2</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> fibarry[<span class="number">2</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//递归实现</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Fibo1</span><span class="params">(n <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> n == <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> n == <span class="number">1</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> n &gt; <span class="number">1</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> Fibo1(n<span class="number">-1</span>) + Fibo1(n<span class="number">-2</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//迭代实现</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Fibo2</span><span class="params">(n <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> n &lt; <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> n == <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> n &lt;= <span class="number">2</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		a, b := <span class="number">1</span>, <span class="number">1</span></span><br><span class="line">		result := <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">3</span>; i &lt;= n; i++ &#123;</span><br><span class="line">			result = a + b</span><br><span class="line">			a, b = b, result</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> result</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//利用闭包</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Fibo3</span><span class="params">(n <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> n &lt; <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		f := Fibonacci()</span><br><span class="line">		result := <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n; i++ &#123;</span><br><span class="line">			result = f()</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> result</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Fibonacci</span><span class="params">()</span></span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	a, b := <span class="number">0</span>, <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> <span class="type">int</span> &#123;</span><br><span class="line">		a, b = b, a+b</span><br><span class="line">		<span class="keyword">return</span> a</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>查找算法</category>
+        <category>通用查找</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>查找算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>B树查找算法</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/search/tree/B_Tree_Search/</url>
+    <content><![CDATA[<h1 id="B树查找"><a href="#B树查找" class="headerlink" title="B树查找"></a>B树查找</h1><h1 id="背景说明："><a href="#背景说明：" class="headerlink" title="背景说明："></a>背景说明：</h1><blockquote>
+<p>二叉树在数据量庞大的时候，树的深度难以想象，造成了磁盘的IO读取性能急剧衰减，为了提高在大数据领域和数据库方面的适用性，提出了多路数，每个节点存储多个数据，同时可以存在多个子节点，这样树的层数得到了极大的缩减</p>
+</blockquote>
+<h2 id="多路数-B树"><a href="#多路数-B树" class="headerlink" title="多路数 - B树"></a>多路数 - B树</h2><h3 id="一、B树的定义"><a href="#一、B树的定义" class="headerlink" title="一、B树的定义"></a>一、B树的定义</h3><blockquote>
+<p>条件：</p>
+<blockquote>
+<p>a、根节点至少有2个子节点</p>
+<p>b、每个中间节点都包含k-1个元素和k个孩子，其中 m&#x2F;2 &lt;&#x3D; k &lt;&#x3D; m</p>
+<p>c、每一个叶子节点都包含k-1个元素，其中 m&#x2F;2 &lt;&#x3D; k &lt;&#x3D; m</p>
+<p>d、所有的叶子结点都位于同一层</p>
+<p>e、每个节点中的元素从小到大排列，节点当中k-1个元素正好是k个孩子包含的元素的值域分划</p>
+</blockquote>
+</blockquote>
+<h3 id="二、B树的插入操作"><a href="#二、B树的插入操作" class="headerlink" title="二、B树的插入操作"></a>二、B树的插入操作</h3><p>插入操作是指插入一个关键字（也可以是一个复杂的自定义结构体）。如果B树中已存在需要插入的关键字，则不再插入。若B树不存在这个关键字,则一定是在叶子结点中进行插入操作。</p>
+<p>1、根据要插入的关键字的值，找到叶子结点并插入。</p>
+<p>2、判断当前结点关键字的个数是否小于等于m-1，若满足则结束，否则进行第3步。</p>
+<p>3、以结点中间的关键字为中心分裂成左右两部分，然后将这个中间的关键字插入到父结点中，这个关键字的左子树指向分裂后的左半部分，这个关键字的右子支指向分裂后的右半部分，然后将当前结点指向父结点，继续进行第3步。<br>下面以4阶B树为例，介绍B树的插入操作，在4阶B树中，结点最多有3个关键字,最少有1个key关键字</p>
+<ol>
+<li>在空树中插入38</li>
+</ol>
+<p><img src="http://pic.xishng.top/img/202201171145510.png" alt="在空树中插入38"></p>
+<ol>
+<li>继续插入21,40。此时关键字该个数仍小于小于等于m-1</li>
+</ol>
+<p><img src="http://pic.xishng.top/img/202201171146986.png" alt="继续插入21,40"></p>
+<ol>
+<li>继续插入96</li>
+</ol>
+<p>插入后超过了最大允许的关键字个数3，所以以关键字值为40（中间节点38,40都可以）为中心进行分裂，结果如下图所示，分裂后当前结点指针指向父结点，满足B树条件，插入操作结束。</p>
+<p><img src="http://pic.xishng.top/img/202201171147921.png" alt="继续插入96"></p>
+<ol>
+<li>继续插入20,39。</li>
+</ol>
+<p>含有20,21,38,39的节点需要以38分裂。并向父结点进位38，然后当前结点指向父结点.查看父节点是否满足B树。满足定义，结束。不满足，继续分裂父节点。</p>
+<p><img src="http://pic.xishng.top/img/202201171147463.png" alt="继续插入20,39。"></p>
+<ol>
+<li>继续插入41,42,46</li>
+</ol>
+<p>含有41,42,46,96的节点需要以46分裂。并向父结点进位46。</p>
+<p><img src="http://pic.xishng.top/img/202201171147846.png" alt="继续插入41,42,46"></p>
+<ol>
+<li><p>继续插入43,44</p>
+<ol>
+<li><p>含有41,42,43,44的节点需要以43分裂。并向父结点进位43,此时当前结点指向父结点.检测到父节点不满足B树，继续分裂父节点，如下b操作</p>
+<p> <img src="http://pic.xishng.top/img/202201171148432.png" alt="继续插入43"></p>
+</li>
+<li><p>分裂父节点</p>
+</li>
+</ol>
+<p> <img src="http://pic.xishng.top/img/202201171148075.png" alt="继续插入44"></p>
+</li>
+</ol>
+<h3 id="三、B树的删除操作"><a href="#三、B树的删除操作" class="headerlink" title="三、B树的删除操作"></a>三、B树的删除操作</h3><p>删除操作是指删除该B树中的某个节点中的指定关键字，如果B树中不存对应的关键字，则删除失败。</p>
+<blockquote>
+<p>如果当前需要删除的关键字位于非叶子结点上，则用后继最小关键字覆盖要删除的关键字，然后在后继关键字所在的子支中删除该后继关键字。此时后继关键字一定位于叶子结点上，这个过程和二叉搜索树删除结点的方式类似。删除这个记录后执行第2步<br>2、该结点关键字个数大于等于Math.ceil(m&#x2F;2)-1，结束删除操作，否则执行第3步。<br>3、如果兄弟结点关键字个数大于Math.ceil(m&#x2F;2)-1，则父结点中的关键字下移到该结点，兄弟结点中的一个关键字上移，删除操作结束。<br>否则，将父结点中的关键字下移与当前结点及它的兄弟结点中的关键字合并，形成一个新的结点。原父结点中的key的两个孩子指针就变成了一个孩子指针，指向这个新结点。然后当前结点的指针指向父结点，重复上第2步。<br>有些结点它可能即有左兄弟，又有右兄弟，那么我们任意选择一个兄弟结点进行操作即可。<br>下面以4阶B树为例，介绍B树的删除操作，4阶B树中，结点最多有3个key,最少有1个key</p>
+<ol>
+<li><p>删除21，删除后结点中的关键字个数仍然大于等1，所以删除结束。</p>
+<p> <img src="http://pic.xishng.top/img/202201171148440.png" alt="删除21"></p>
+</li>
+<li><p>删除39，删除后，该节点关键字个数小于1，看兄弟节点有多的没，右邻兄弟有多的。则将父节点的40下移，将右邻兄弟节点的最小关键字41上移。</p>
+<p> <img src="http://pic.xishng.top/img/202201171148317.png" alt="删除39"></p>
+</li>
+<li><p>删除40,兄弟们都不够了。开始合并，将该节点剩余的（这里一个也没剩余）和右兄弟（和左兄弟也行）以及父节点的相关关键字进行合并。</p>
+<p> <img src="http://pic.xishng.top/img/202201171149379.png" alt="删除40"></p>
+</li>
+<li><p>删除38,38位于非叶子结点上，则用后继最小关键字41覆盖要删除的关键字，然后在后继关键字所在的子支中删除41。查看删除关键字的节点是否满足B树定义，满足，删除结束。不满足，进行调整。</p>
+</li>
+</ol>
+<p><img src="http://pic.xishng.top/img/202201171149618.png" alt="删除38"></p>
+</blockquote>
+<h3 id="四、代码"><a href="#四、代码" class="headerlink" title="四、代码"></a>四、代码</h3><figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> M <span class="type">int</span> = <span class="number">4</span>                <span class="comment">//M阶B树</span></span><br><span class="line"><span class="keyword">const</span> Min <span class="type">int</span>= M/<span class="number">2</span> <span class="number">-1</span>          <span class="comment">//每个节点至少有的关键字个数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> BT <span class="keyword">struct</span> &#123;</span><br><span class="line">	parent   *BT       <span class="comment">//指向父节点的指针</span></span><br><span class="line">	keyNum   <span class="type">int</span>       <span class="comment">//关键字个数</span></span><br><span class="line">	key      [M+<span class="number">1</span>]<span class="type">int</span>     <span class="comment">//关键字向量,key[0]未用</span></span><br><span class="line">	child    [M+<span class="number">1</span>]*BT     <span class="comment">//子树指针向量</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在B树中查找关键字为value的节点，查找成功，返回在节点的位置和该节点</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *BT)</span></span> Search(value <span class="type">int</span>) (<span class="type">bool</span>,<span class="type">int</span>,*BT) &#123;</span><br><span class="line">	node := &amp;BT&#123;&#125;</span><br><span class="line">	<span class="keyword">var</span> i <span class="type">int</span></span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>,<span class="number">0</span>,<span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> t != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> i=t.keyNum; i&gt;<span class="number">0</span>&amp;&amp;value&lt;=t.key[i]; i-- &#123;</span><br><span class="line">			<span class="keyword">if</span> value == t.key[i] &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">true</span>,i,t</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> t.child[i] == <span class="literal">nil</span> &#123;</span><br><span class="line">			node = t</span><br><span class="line">		&#125;</span><br><span class="line">		t = t.child[i]</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>,i,node</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//分裂节点t</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *BT)</span></span> Split() *BT&#123;</span><br><span class="line">	newNode := BT&#123;&#125;</span><br><span class="line">	parent := t.parent</span><br><span class="line">	<span class="keyword">if</span> parent == <span class="literal">nil</span> &#123;</span><br><span class="line">		parent = &amp;BT&#123;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	mid := t.keyNum/<span class="number">2</span>+<span class="number">1</span></span><br><span class="line">	newNode.keyNum = M - mid</span><br><span class="line">	t.keyNum = mid <span class="number">-1</span></span><br><span class="line">	j := <span class="number">1</span></span><br><span class="line">	k:=mid+<span class="number">1</span></span><br><span class="line">	<span class="keyword">for</span> ;k&lt;=M;k++ &#123;  <span class="comment">//新生成的右节点</span></span><br><span class="line">		newNode.key[j] = t.key[k]</span><br><span class="line">		newNode.child[j<span class="number">-1</span>] = t.child[k<span class="number">-1</span>]</span><br><span class="line">		j = j+<span class="number">1</span></span><br><span class="line">	&#125;</span><br><span class="line">	newNode.child[j<span class="number">-1</span>] = t.child[k<span class="number">-1</span>]</span><br><span class="line">	newNode.parent = parent</span><br><span class="line">	t.parent = parent</span><br><span class="line">	<span class="comment">//将该节点中间节点插入到父节点</span></span><br><span class="line">	k=parent.keyNum</span><br><span class="line">	<span class="keyword">for</span> ;t.key[mid]&lt;parent.key[k];k-- &#123;</span><br><span class="line">		parent.key[k+<span class="number">1</span>] = parent.key[k]</span><br><span class="line">		parent.child[k+<span class="number">1</span>] = parent.child[k]</span><br><span class="line">	&#125;</span><br><span class="line">	parent.key[k+<span class="number">1</span>] = t.key[mid]</span><br><span class="line">	parent.child[k] = t</span><br><span class="line">	parent.child[k+<span class="number">1</span>] = &amp;newNode</span><br><span class="line">	parent.keyNum++</span><br><span class="line">	<span class="keyword">if</span> parent.keyNum &gt;=M &#123;</span><br><span class="line">		<span class="keyword">return</span> parent.Split()</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> parent</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">在树中插入关键字value</span></span><br><span class="line"><span class="comment">1、先查看树中是否有此关键字</span></span><br><span class="line"><span class="comment">2、通过第1步也能确定会插入到哪个节点中</span></span><br><span class="line"><span class="comment">2、查看插入节点后是否需要分裂节点</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *BT)</span></span> Insert(value <span class="type">int</span>) *BT&#123;</span><br><span class="line">	<span class="keyword">var</span> i <span class="type">int</span></span><br><span class="line">	ok,_,node:= t.Search(value)  <span class="comment">//1、先在整颗树中找到要插入到哪个节点中</span></span><br><span class="line">	<span class="keyword">if</span> !ok &#123;                    <span class="comment">//树中不存在此节点</span></span><br><span class="line">		node.key[<span class="number">0</span>] = value</span><br><span class="line">		<span class="keyword">for</span> i = node.keyNum;i&gt;<span class="number">0</span> &amp;&amp; value&lt;node.key[i];i-- &#123;</span><br><span class="line">			node.key[i+<span class="number">1</span>] = node.key[i]</span><br><span class="line">		&#125;</span><br><span class="line">		node.key[i+<span class="number">1</span>] = value</span><br><span class="line">		node.keyNum++</span><br><span class="line">		<span class="keyword">if</span> node.keyNum &lt; M &#123;     <span class="comment">//没有超过节点最大数，结束插入</span></span><br><span class="line">			<span class="keyword">return</span> t</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;                  <span class="comment">//否则，分裂该节点</span></span><br><span class="line">			parent := node.Split()</span><br><span class="line">			<span class="keyword">for</span> parent.parent != <span class="literal">nil</span> &#123;</span><br><span class="line">				parent = parent.parent</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> parent</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*删除关键字</span></span><br><span class="line"><span class="comment">	1）要删除的key位于非叶子结点上，则用后继key覆盖要删除的key，然后删除该后继key。</span></span><br><span class="line"><span class="comment">	2）该结点key个数大于等于Math.ceil(m/2)-1，结束删除操作，否则执行第3步。</span></span><br><span class="line"><span class="comment">	3）如果兄弟结点key个数大于Math.ceil(m/2)-1，则父结点中的key下移到该结点，</span></span><br><span class="line"><span class="comment">	3）兄弟结点中的一个key上移，删除操作结束。</span></span><br><span class="line"><span class="comment">	否则，将父结点中的key下移与当前结点及它的兄弟结点中的key合并，形成一个新的结点。</span></span><br><span class="line"><span class="comment">	然后当前结点的指针指向父结点，重复上第2步。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">//在整颗树中找到要删除的关键字在哪个节点中</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *BT)</span></span> Delete(value <span class="type">int</span>) *BT&#123;</span><br><span class="line">	ok,i,node:= t.Search(value)  <span class="comment">//先</span></span><br><span class="line">	<span class="keyword">if</span> ok &#123;</span><br><span class="line">		t = node.DeleteNode(value,i)<span class="comment">//在这个节点中删除这个节点</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//删除关键字</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *BT)</span></span> DeleteNode(value <span class="type">int</span>,i <span class="type">int</span>) *BT&#123;</span><br><span class="line">    	<span class="keyword">if</span> t.child[i] != <span class="literal">nil</span> &#123; <span class="comment">//非终端节点</span></span><br><span class="line">			valueTemp,nodeTemp := t.FindAfterMinNode(i) <span class="comment">//找到后继最下层非终端结点的最小关键字和相应节点</span></span><br><span class="line">    		t.key[i] = *valueTemp           <span class="comment">//将最下层非终端结点中的最小关键字取代要删除的关键字</span></span><br><span class="line">    		nodeTemp.DeleteNode(*valueTemp,<span class="number">1</span>)<span class="comment">// 然后删除最下层非终端结点中的最小关键字</span></span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">for</span> k := i;k&lt;t.keyNum;k++ &#123;</span><br><span class="line">				t.key[k] = t.key[k+<span class="number">1</span>]</span><br><span class="line">				t.child[k] = t.child[k+<span class="number">1</span>]</span><br><span class="line">			&#125;</span><br><span class="line">			t.keyNum--</span><br><span class="line">			<span class="keyword">if</span> t.keyNum &lt; (M<span class="number">-1</span>)/<span class="number">2</span> &amp;&amp; t.parent!=<span class="literal">nil</span> &#123;</span><br><span class="line">				ok,t := t.Restore()</span><br><span class="line">				<span class="keyword">if</span> !ok &#123;</span><br><span class="line">					t = t.MergeNode()</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> t.parent != <span class="literal">nil</span> &#123;</span><br><span class="line">			t  = t.parent</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//调整B树,该节点与父亲节点和兄弟节点之间的调整</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *BT)</span></span> Restore() (<span class="type">bool</span>,*BT)&#123;</span><br><span class="line">	parent := t.parent</span><br><span class="line">	j:=<span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> ;parent.child[j]!=t;j++ &#123;&#125;</span><br><span class="line">	<span class="keyword">if</span> j&gt;<span class="number">0</span> &#123;   <span class="comment">//p有左邻兄弟节点</span></span><br><span class="line">		b := parent.child[j<span class="number">-1</span>]</span><br><span class="line">		<span class="keyword">if</span> b.keyNum &gt; (M<span class="number">-1</span>)/<span class="number">2</span> &#123;<span class="comment">//左兄弟有多余关键字</span></span><br><span class="line">			<span class="keyword">for</span> k:=t.keyNum;k&gt;=<span class="number">0</span>;k-- &#123; <span class="comment">//将t中关键字和指针都右移动,给父节点移动下来的关键字空出位置</span></span><br><span class="line">				t.key[k+<span class="number">1</span>] = t.key[k]</span><br><span class="line">				<span class="comment">//t.child[k+1] = t.child[k]</span></span><br><span class="line">			&#125;</span><br><span class="line">			t.key[<span class="number">1</span>] = parent.key[j]</span><br><span class="line">			parent.key[j] = b.key[b.keyNum] <span class="comment">//b中关键字上移至parent</span></span><br><span class="line">			t.keyNum++</span><br><span class="line">			b.keyNum--</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>,parent</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> j&lt;parent.keyNum &#123; <span class="comment">//p有右邻兄弟节点</span></span><br><span class="line">		b := parent.child[j+<span class="number">1</span>]</span><br><span class="line">		<span class="keyword">if</span> b.keyNum &gt; (M<span class="number">-1</span>)/<span class="number">2</span> &#123;<span class="comment">//右邻兄弟有多余关键字</span></span><br><span class="line">			t.key[t.keyNum+<span class="number">1</span>] = parent.key[j+<span class="number">1</span>] <span class="comment">//父节点关键字下移</span></span><br><span class="line">			parent.key[j+<span class="number">1</span>] = b.key[<span class="number">1</span>]           <span class="comment">//兄弟节点关键字上移</span></span><br><span class="line">			<span class="keyword">for</span> k:=<span class="number">1</span>;k&lt;b.keyNum;k++ &#123;</span><br><span class="line">				b.key[k] = b.key[k+<span class="number">1</span>]</span><br><span class="line">			&#125;</span><br><span class="line">			t.keyNum++</span><br><span class="line">			b.keyNum--</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>,parent</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>,t <span class="comment">//没有调整成功,需要合并</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *BT)</span></span> MergeNode() *BT&#123;</span><br><span class="line">	b := &amp;BT&#123;&#125;</span><br><span class="line">	parent := t.parent</span><br><span class="line">	j:=<span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> ;parent.child[j]!=t;j++ &#123;&#125;</span><br><span class="line">	<span class="keyword">if</span> j&gt;<span class="number">0</span> &#123;      <span class="comment">//t有左兄弟，与左兄弟合并</span></span><br><span class="line">		b = parent.child[j<span class="number">-1</span>]</span><br><span class="line">		b.keyNum++</span><br><span class="line">		b.key[b.keyNum] = parent.key[j]<span class="comment">//父结点中关键字下移</span></span><br><span class="line">		<span class="keyword">for</span> k:=<span class="number">1</span>;k&lt;=t.keyNum;k++ &#123;     <span class="comment">//t节点中关键字移到左兄弟节点中</span></span><br><span class="line">			b.keyNum++</span><br><span class="line">			b.key[b.keyNum] = t.key[k]</span><br><span class="line">		&#125;</span><br><span class="line">		parent.keyNum--</span><br><span class="line">		<span class="keyword">for</span> k:=j;k&lt;parent.keyNum;k++ &#123;  <span class="comment">//改变父节点</span></span><br><span class="line">			parent.key[k] = parent.key[k+<span class="number">1</span>]</span><br><span class="line">			parent.child[k] = parent.child[k+<span class="number">1</span>]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;       <span class="comment">//与右兄弟合并</span></span><br><span class="line">		b = parent.child[j+<span class="number">1</span>]</span><br><span class="line">		t.keyNum++</span><br><span class="line">		t.key[t.keyNum] = parent.key[j]<span class="comment">//父结点中关键字下移</span></span><br><span class="line">		<span class="keyword">for</span> k:=<span class="number">1</span>;k&lt;=b.keyNum;k++ &#123;     <span class="comment">//兄弟节点中关键字移到t节点中</span></span><br><span class="line">			t.keyNum++</span><br><span class="line">			t.key[t.keyNum] = b.key[k]</span><br><span class="line">		&#125;</span><br><span class="line">		parent.keyNum--</span><br><span class="line">		<span class="keyword">for</span> k:=j;k&lt;=parent.keyNum;k++ &#123;  <span class="comment">//改变父节点</span></span><br><span class="line">			parent.key[k] = parent.key[k+<span class="number">1</span>]</span><br><span class="line">			parent.child[k] = parent.child[k+<span class="number">1</span>]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> parent</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//查找后继最下层非终端结点的最小关键字</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *BT)</span></span> FindAfterMinNode(i <span class="type">int</span>) (*<span class="type">int</span>,*BT) &#123;</span><br><span class="line">	leaf := t</span><br><span class="line">	<span class="keyword">if</span> leaf == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>,<span class="literal">nil</span></span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		leaf = leaf.child[i]</span><br><span class="line">		<span class="keyword">for</span> leaf.child[<span class="number">0</span>] != <span class="literal">nil</span> &#123;</span><br><span class="line">			leaf = leaf.child[<span class="number">0</span>]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &amp;leaf.key[<span class="number">1</span>],leaf</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *BT)</span></span> BTreeTraverse() &#123;</span><br><span class="line">	queue := []*BT&#123;&#125;</span><br><span class="line">	queue = <span class="built_in">append</span>(queue,t)</span><br><span class="line">	i := <span class="number">0</span>       <span class="comment">//当前要出队列的下标s</span></span><br><span class="line">	<span class="keyword">for</span>  i &lt; <span class="built_in">len</span>(queue) &#123;</span><br><span class="line">		current := queue[i]</span><br><span class="line">		i=i+<span class="number">1</span></span><br><span class="line">		fmt.Print(<span class="string">&quot;[&quot;</span>)</span><br><span class="line">		<span class="keyword">for</span> k:=<span class="number">1</span>;k&lt;=current.keyNum;k++ &#123;</span><br><span class="line">			fmt.Printf(<span class="string">&quot; %d &quot;</span>,current.key[k])</span><br><span class="line">		&#125;</span><br><span class="line">		fmt.Print(<span class="string">&quot;]\\n&quot;</span>)</span><br><span class="line">		<span class="keyword">for</span> k:=<span class="number">0</span>;k&lt;=current.keyNum;k++ &#123;</span><br><span class="line">			<span class="keyword">if</span> current.child[k] != <span class="literal">nil</span> &#123;</span><br><span class="line">				queue = <span class="built_in">append</span>(queue,current.child[k])</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//test</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//插入</span></span><br><span class="line">	bsTree := BT&#123;<span class="literal">nil</span>,<span class="number">2</span>,[M+<span class="number">1</span>]<span class="type">int</span>&#123;<span class="number">0</span>,<span class="number">21</span>,<span class="number">38</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,[M+<span class="number">1</span>]*BT&#123;&#125;&#125;</span><br><span class="line">	newTree := bsTree.Insert(<span class="number">96</span>)</span><br><span class="line">	newTree = newTree.Insert(<span class="number">40</span>)</span><br><span class="line">	newTree = newTree.Insert(<span class="number">20</span>)</span><br><span class="line">	newTree = bsTree.Insert(<span class="number">39</span>)</span><br><span class="line">	newTree = newTree.Insert(<span class="number">41</span>)</span><br><span class="line">	newTree = newTree.Insert(<span class="number">42</span>)</span><br><span class="line">	newTree = newTree.Insert(<span class="number">46</span>)</span><br><span class="line">	newTree = newTree.Insert(<span class="number">43</span>)</span><br><span class="line">	newTree = newTree.Insert(<span class="number">44</span>)</span><br><span class="line">	newTree.BTreeTraverse()</span><br><span class="line">	<span class="comment">//删除</span></span><br><span class="line">	newTree = newTree.Delete(<span class="number">38</span>)</span><br><span class="line">	newTree = newTree.Delete(<span class="number">39</span>)</span><br><span class="line">	newTree = newTree.Delete(<span class="number">42</span>)</span><br><span class="line">	newTree.BTreeTraverse()</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>查找算法</category>
+        <category>树查找</category>
+      </categories>
+      <tags>
+        <tag>查找算法</tag>
+        <tag>B树</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>平衡二叉树查找算法</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/search/tree/Balanced_B_Tree_Search/</url>
+    <content><![CDATA[<h1 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h1><p><strong>树</strong>是一种计算机数据结构中非常常用的一种结构，其中就包含了：平衡二叉树，这种树是一种特殊的二叉查找树(二叉查找树也就是，右孩子大于其父结点，左孩子小于其父结点的树)，但是简单的二叉查找树存在的问题就是不平衡，最差的查找效率为O(n)，故就有人发明了一种平衡的额二叉查找树。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>平衡二叉树是一种二叉查找树<br>每个结点的左子树的高度减去右子树的高度的绝对值不超过1<br>空树和左右子树都是平衡二叉树<br>相比红黑树，平衡二叉树比较适用于没有删除的情况</p>
+<h3 id="平衡因子"><a href="#平衡因子" class="headerlink" title="平衡因子"></a>平衡因子</h3><p>平衡二叉树是在二叉查查找树的基础上进行构建了，为了维持平衡二叉树的平衡，那么就需要一种机制来判断平衡二叉树是否是平衡的。这种机制就叫做平衡因子。</p>
+<p>平衡二叉树的每个结点都会维持一个值，这个值就是平衡因子，这个平衡因子就是这个结点的左子树的高度减去右子树的高度得到的值。如果这个平衡因子的值的绝对值大于1了，说明这个树就不平衡了，那么就需要调整树的结构了。</p>
+<p>我们可以从如上这个这个图中看的到：每个结点都维持了一个值，比如左边的AVL 树根结点的值为-1，这个-1是怎么来的呢，就是结点3的左子树的高度为 2, 右子树的高度为 3, 左子树的高度减去右子树的高度就得到这个结点的平衡因子。</p>
+<p>如果某个结点的平衡因子的绝对值大于了 1 ，那么就说明这个平衡二叉树不平衡了，就需要调整平衡二叉树的结构。</p>
+<p><img src="http://pic.xishng.top/img/202201171140140.png" alt="平衡因子"></p>
+<h2 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h2><p>由于AVL树需要做到平衡，所以每次插入叶子节点，如果发现不平衡，都需要进行旋转以保持平衡。</p>
+<p>下面是旋转图例，可以参考的看下：</p>
+<p><img src="http://pic.xishng.top/img/202201171141598.png" alt="旋转"></p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> AVL <span class="keyword">struct</span> &#123;</span><br><span class="line">	value  <span class="type">int</span>  <span class="comment">//值</span></span><br><span class="line">	height <span class="type">int</span>  <span class="comment">//深度</span></span><br><span class="line">	left   *AVL <span class="comment">//左子树</span></span><br><span class="line">	right  *AVL <span class="comment">//右子树</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Search 查找元素</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> Search(value <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> value &lt; t.value &#123;</span><br><span class="line">		<span class="keyword">return</span> t.left.Search(value)</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> value &gt; t.value &#123;</span><br><span class="line">		<span class="keyword">return</span> t.right.Search(value)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Insert 添加元素</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> Insert(value <span class="type">int</span>) *AVL &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		newNode := AVL&#123;value, <span class="number">1</span>, <span class="literal">nil</span>, <span class="literal">nil</span>&#125;</span><br><span class="line">		<span class="keyword">return</span> &amp;newNode</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> value &lt; t.value &#123;</span><br><span class="line">		t.left = t.left.Insert(value)</span><br><span class="line">		t = t.adjust()</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> value &gt; t.value &#123;</span><br><span class="line">		t.right = t.right.Insert(value)</span><br><span class="line">		t = t.adjust()</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;the node exit&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	t.height = max(t.left.getHeight(), t.right.getHeight()) + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Delete</span></span><br><span class="line"><span class="comment">	删除元素</span></span><br><span class="line"><span class="comment">		*1、如果被删除结点只有一个子结点，就直接将A的子结点连至A的父结点上，并将A删除</span></span><br><span class="line"><span class="comment">		*2、如果被删除结点有两个子结点，将该结点右子数内的最小结点取代A。</span></span><br><span class="line"><span class="comment">		*3、查看是否平衡, 如果不平衡，就调整</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> Delete(value <span class="type">int</span>) *AVL &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> t</span><br><span class="line">	&#125;</span><br><span class="line">	compare := value - t.value</span><br><span class="line">	<span class="keyword">if</span> compare &lt; <span class="number">0</span> &#123;</span><br><span class="line">		t.left = t.left.Delete(value)</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> compare &gt; <span class="number">0</span> &#123;</span><br><span class="line">		t.right = t.right.Delete(value)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123; <span class="comment">//找到结点,删除结点（）</span></span><br><span class="line">		<span class="keyword">if</span> t.left != <span class="literal">nil</span> &amp;&amp; t.right != <span class="literal">nil</span> &#123;</span><br><span class="line">			t.value = t.right.getMin()</span><br><span class="line">			t.right = t.right.Delete(t.value)</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> t.left != <span class="literal">nil</span> &#123;</span><br><span class="line">			t = t.left</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123; <span class="comment">//只有一个右孩子或没孩子</span></span><br><span class="line">			t = t.right</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> t != <span class="literal">nil</span> &#123;</span><br><span class="line">		t.height = max(t.left.getHeight(), t.right.getHeight()) + <span class="number">1</span></span><br><span class="line">		t = t.adjust()</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// adjust 判断是否需要旋转</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> adjust() *AVL &#123;</span><br><span class="line">	<span class="keyword">if</span> t.right.getHeight()-t.left.getHeight() == <span class="number">2</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> t.right.right.getHeight() &gt; t.right.left.getHeight() &#123;</span><br><span class="line">			t = t.leftRotate()</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			t = t.rightThenLeftRotate()</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> t.left.getHeight()-t.right.getHeight() == <span class="number">2</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> t.left.left.getHeight() &gt; t.left.right.getHeight() &#123;</span><br><span class="line">			t = t.rightRotate()</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			t = t.LeftThenRightRotate()</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// leftRotate 左旋</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> leftRotate() *AVL &#123;</span><br><span class="line">	headNode := t.right</span><br><span class="line">	t.right = headNode.left</span><br><span class="line">	headNode.left = t</span><br><span class="line"></span><br><span class="line">	<span class="comment">//更新结点高度</span></span><br><span class="line">	t.height = max(t.left.getHeight(), t.right.getHeight()) + <span class="number">1</span></span><br><span class="line">	headNode.height = max(headNode.left.getHeight(), headNode.right.getHeight()) + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> headNode</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// rightRotate 右旋</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> rightRotate() *AVL &#123;</span><br><span class="line">	headNode := t.left</span><br><span class="line">	t.left = headNode.right</span><br><span class="line">	headNode.right = t</span><br><span class="line"></span><br><span class="line">	<span class="comment">//更新结点高度</span></span><br><span class="line">	t.height = max(t.left.getHeight(), t.right.getHeight()) + <span class="number">1</span></span><br><span class="line">	headNode.height = max(headNode.left.getHeight(), headNode.right.getHeight()) + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> headNode</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// rightThenLeftRotate 右旋转,之后左旋转</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> rightThenLeftRotate() *AVL &#123;</span><br><span class="line">	<span class="comment">//以失衡点右结点先右旋转</span></span><br><span class="line">	sonHeadNode := t.right.rightRotate()</span><br><span class="line">	t.right = sonHeadNode</span><br><span class="line"></span><br><span class="line">	<span class="comment">//再以失衡点左旋转</span></span><br><span class="line">	<span class="keyword">return</span> t.leftRotate()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// LeftThenRightRotate 左旋转,之后右旋转</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> LeftThenRightRotate() *AVL &#123;</span><br><span class="line">	<span class="comment">//以失衡点左结点先左旋转</span></span><br><span class="line">	sonHeadNode := t.left.leftRotate()</span><br><span class="line">	t.left = sonHeadNode</span><br><span class="line">	<span class="comment">//再以失衡点左旋转</span></span><br><span class="line">	<span class="keyword">return</span> t.rightRotate()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getAll 按顺序获得树中元素</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> getAll() []<span class="type">int</span> &#123;</span><br><span class="line">	values := []<span class="type">int</span>&#123;&#125;</span><br><span class="line">	<span class="keyword">return</span> addValues(values, t)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// addValues 将一个节点加入切片中</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addValues</span><span class="params">(values []<span class="type">int</span>, t *AVL)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> t != <span class="literal">nil</span> &#123;</span><br><span class="line">		values = addValues(values, t.left)</span><br><span class="line">		values = <span class="built_in">append</span>(values, t.value)</span><br><span class="line">		fmt.Println(t.value, t.height)</span><br><span class="line">		values = addValues(values, t.right)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> values</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getMin 查找子树最小值</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> getMin() <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> t.left == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> t.value</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> t.left.getMin()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getMax 查找子树最大值</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> getMax() <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> t.right == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> t.value</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> t.right.getMax()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getMinNode 查找最小结点</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> getMinNode() *AVL &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> t.left != <span class="literal">nil</span> &#123;</span><br><span class="line">			t = t.left</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getMaxNode 查找最大结点</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> getMaxNode() *AVL &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> t.right != <span class="literal">nil</span> &#123;</span><br><span class="line">			t = t.right</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getHeight 得到树高</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> getHeight() <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t.height</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// max 最深节点高度</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">max</span><span class="params">(a <span class="type">int</span>, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> a &gt; b &#123;</span><br><span class="line">		<span class="keyword">return</span> a</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> b</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	bsTree := AVL&#123;<span class="number">100</span>, <span class="number">1</span>, <span class="literal">nil</span>, <span class="literal">nil</span>&#125;</span><br><span class="line">	newTree := bsTree.Insert(<span class="number">60</span>)</span><br><span class="line">	newTree = bsTree.Insert(<span class="number">120</span>)</span><br><span class="line">	newTree = bsTree.Insert(<span class="number">110</span>)</span><br><span class="line">	newTree = bsTree.Insert(<span class="number">130</span>)</span><br><span class="line">	newTree = bsTree.Insert(<span class="number">105</span>)</span><br><span class="line">	fmt.Println(newTree.getAll())</span><br><span class="line"></span><br><span class="line">	newTree.Delete(<span class="number">110</span>)</span><br><span class="line">	fmt.Println(newTree.getAll())</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>查找算法</category>
+        <category>树查找</category>
+      </categories>
+      <tags>
+        <tag>查找算法</tag>
+        <tag>B树</tag>
+        <tag>二叉树</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二叉树查找</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/search/tree/Binary_Tree_Search/</url>
+    <content><![CDATA[<h1 id="二叉树查找"><a href="#二叉树查找" class="headerlink" title="二叉树查找"></a>二叉树查找</h1><blockquote>
+<p>二叉查找树是先对待查找的数据进行生成树，确保树的左分支的值小于右分支的值，然后再用所查数据和每个节点的父节点比较大小，查找最适合的范围。 这个算法的查找效率很高，但是如果使用这种查找方法要首先创建树。</p>
+<p>适用场景：</p>
+<blockquote>
+<p>前面的几种查找算法因为都是适用于有序集，在插入和删除操作上就需要耗费大量的时间。有没有一种既可以使得插入和删除效率不错，又可以比较高效的实现查找的算法。</p>
+<p><strong>二叉查找树</strong>（BinarySearch Tree，也叫二叉搜索树，或称二叉排序树Binary Sort Tree）或者是一棵空树，或者是具有下列性质的二叉树：</p>
+<blockquote>
+<p>1）若任意节点的左子树不空，则左子树上所有结点的值均小于它的根结点的值；</p>
+<p>2）若任意节点的右子树不空，则右子树上所有结点的值均大于它的根结点的值；</p>
+<p>3）任意节点的左、右子树也分别为二叉查找树。</p>
+<ul>
+<li><em>二叉查找树性质：对二叉查找树进行中序遍历，即可得到有序的数列</em>。</li>
+</ul>
+</blockquote>
+</blockquote>
+<p>如代码：</p>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">基本思路：先把数组构造出一颗二叉树的样纸，然后查找的时候在从root往下对比</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BSTsearch</span><span class="params">(arr []<span class="type">int</span>, key <span class="type">int</span>)</span></span> <span class="type">int</span>&#123;</span><br><span class="line">	<span class="comment">// 先在内存中构造 二叉树</span></span><br><span class="line">	tree := <span class="built_in">new</span>(Tree)</span><br><span class="line">	<span class="keyword">for</span> i, v := <span class="keyword">range</span> arr &#123;</span><br><span class="line">		Insert(tree, v, i)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 开始二叉树查找目标key</span></span><br><span class="line">	<span class="keyword">return</span> searchKey(tree.Root, key)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 节点结构</span></span><br><span class="line"><span class="keyword">type</span> Node <span class="keyword">struct</span> &#123;</span><br><span class="line">	Value, Index <span class="type">int</span>  <span class="comment">// 元素的值和在数组中的位置</span></span><br><span class="line">	Left, Right *Node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 树结构</span></span><br><span class="line"><span class="keyword">type</span> Tree <span class="keyword">struct</span> &#123;</span><br><span class="line">	Root *Node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把数组的的元素插入树中</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Insert</span><span class="params">(tree *Tree, value, index <span class="type">int</span>)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> == tree.Root &#123;</span><br><span class="line">		tree.Root = newNode(value, index)</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		InsertNode(tree.Root, newNode(value, index))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把新增的节点插入树的对应位置</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InsertNode</span><span class="params">(root, childNode *Node)</span></span> &#123;</span><br><span class="line">	<span class="comment">// 否则，先和根的值对比</span></span><br><span class="line">	<span class="keyword">if</span> childNode.Value &lt;= root.Value &#123;</span><br><span class="line">		<span class="comment">// 如果小于等于跟的值，则插入到左子树</span></span><br><span class="line">		<span class="keyword">if</span>  <span class="literal">nil</span> == root.Left &#123;</span><br><span class="line">			root.Left = childNode</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			InsertNode(root.Left, childNode)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="comment">// 否则，插入到右子树</span></span><br><span class="line">		<span class="keyword">if</span> <span class="literal">nil</span> == root.Right &#123;</span><br><span class="line">			root.Right = childNode</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			InsertNode(root.Right, childNode)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newNode</span><span class="params">(value, index <span class="type">int</span>)</span></span> *Node &#123;</span><br><span class="line">	<span class="keyword">return</span> &amp;Node&#123;</span><br><span class="line">		Value: value,</span><br><span class="line">		Index: index,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在构建好的二叉树中，从root开始往下查找对应的key 返回其在数组中的位置</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">searchKey</span><span class="params">(root *Node, key <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> == root &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>  key == root.Value &#123;</span><br><span class="line">		<span class="keyword">return</span> root.Index</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> key &lt; root.Value &#123;</span><br><span class="line">		<span class="comment">// 往左子树查找</span></span><br><span class="line">		<span class="keyword">return</span> searchKey(root.Left, key)</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">// 往右子树查找</span></span><br><span class="line">		<span class="keyword">return</span> searchKey(root.Right, key)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>查找算法</category>
+        <category>树查找</category>
+      </categories>
+      <tags>
+        <tag>查找算法</tag>
+        <tag>二叉树</tag>
+        <tag>树</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>红黑树查找</title>
+    <url>/2022/06/26/withe_snake/algorithm/navigation/search/tree/Red_Black_Tree_Search/</url>
+    <content><![CDATA[<h1 id="红黑树查找"><a href="#红黑树查找" class="headerlink" title="红黑树查找"></a>红黑树查找</h1><blockquote>
+<p>红黑树查找：</p>
+<p><strong>它一种特殊的二叉查找树。红黑树的每个节点上都有存储位表示节点的颜色，可以是红(Red)或黑(Black)。红黑树是2-3树的一种简单高效的实现。</strong></p>
+<p><strong>红黑树的特性</strong>:</p>
+<blockquote>
+<p>（1）每个节点或者是黑色，或者是红色。（2）根节点是黑色。（3）每个叶子节点（NIL）是黑色。 [注意：这里叶子节点，是指为空(NIL或NULL)的叶子节点！]（4）如果一个节点是红色的，则它的子节点必须是黑色的。（5）从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。</p>
+</blockquote>
+<p>如图所示:</p>
+<p><img src="http://pic.xishng.top/img/202201171142665.png" alt="红黑树的特性"></p>
+<p><strong>基本思路:</strong> 红黑树的基本操作是<strong>添加、删除</strong>。在对红黑树进行添加或删除之后，都会用到旋转方法。为什么呢？道理很简单，添加或删除红黑树中的节点之后，红黑树就发生了变化，可能不满足红黑树的5条性质，也就不再是一颗红黑树了，而是一颗普通的树。而通过旋转，可以使这颗树重新成为红黑树。简单点说，旋转的目的是让树保持红黑树的特性。</p>
+<p>旋转包括两种：<strong>左旋</strong> 和 <strong>右旋</strong>。</p>
+<blockquote>
+<p><strong>左旋示意图：</strong></p>
+<p><img src="http://pic.xishng.top/img/202201171142147.png" alt="左旋示意图"></p>
+</blockquote>
+<blockquote>
+<p><strong>完整左旋示意图:</strong></p>
+<p><img src="http://pic.xishng.top/img/202201171143136.png" alt="完整左旋示意图"></p>
+</blockquote>
+<blockquote>
+<p><strong>右旋示意图：</strong></p>
+<p><img src="http://pic.xishng.top/img/202201171143565.png" alt="右旋示意图"></p>
+</blockquote>
+<blockquote>
+<p><strong>完整右旋示意图：</strong></p>
+<p><img src="http://pic.xishng.top/img/202201171143373.png" alt="完整右旋示意图"></p>
+</blockquote>
+<p><strong>无论是左旋还是右旋，被旋转的树，在旋转前是二叉查找树，并且旋转之后仍然是一颗二叉查找树。(二叉查找树：左子 &lt; 根 &lt; 右子)</strong></p>
+<p><img src="http://pic.xishng.top/img/202201171143843.png" alt="二叉查找树：左子 &lt; 根 &lt; 右子"></p>
+<ul>
+<li>可见：<ul>
+<li>左旋中的“左”，意味着“被旋转的节点将变成一个左节点”；</li>
+<li>右旋中的“右”，意味着“被旋转的节点将变成一个右节点”。</li>
+</ul>
+</li>
+</ul>
+<h2 id="节点的插入："><a href="#节点的插入：" class="headerlink" title="节点的插入："></a>节点的插入：</h2><blockquote>
+<p>将红黑树当作一颗二叉查找树，将节点插入将节点着色为红色通过旋转和重新着色等方法来修正该树，使之重新成为一颗红黑树。</p>
+</blockquote>
+<p>为什么着色成红色，而不是黑色呢？</p>
+<blockquote>
+<p>在回答之前，我们需要重新温习一下红黑树的特性：</p>
+<blockquote>
+<p>(1) 每个节点或者是黑色，或者是红色。<br>(2) 根节点是黑色。<br>(3) 每个叶子节点是黑色。 [注意：这里叶子节点，是指为空的叶子节点！]<br>(4) 如果一个节点是红色的，则它的子节点必须是黑色的。<br>(5) 从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。</p>
+</blockquote>
+<p>将插入的节点着色为红色，不会违背”特性(5)”！少违背一条特性，就意味着我们需要处理的情况越少。接下来，就要努力的让这棵树满足其它性质即可；满足了的话，它就又是一颗红黑树了。</p>
+</blockquote>
+<p><strong>将插入节点着色为”红色”之后，不会违背”特性(5)”。那它到底会违背哪些特性呢？</strong></p>
+<blockquote>
+<p>对于”特性(1)”，显然不会违背了。因为我们已经将它涂成红色了。<br> 对于”特性(2)”，显然也不会违背。在第一步中，我们是将红黑树当作二叉查找树，然后执行的插入操作。而根据二叉查找数的特点，插入操作不会改变根节点。所以，根节点仍然是黑色。<br>对于”特性(3)”，显然不会违背了。这里的叶子节点是指的空叶子节点，插入非空节点并不会对它们造成影响。<br>对于”特性(4)”，是有可能违背的！</p>
+</blockquote>
+<p>**那接下来，想办法使之”满足特性(4)”**，就可以将树重新构造成红黑树了。<br> <br> 代码如下：</p>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	RED   = <span class="literal">true</span></span><br><span class="line">	BLACK = <span class="literal">false</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 节点</span></span><br><span class="line"><span class="keyword">type</span> RBNode <span class="keyword">struct</span> &#123;</span><br><span class="line">	Color               <span class="type">bool</span> <span class="comment">// true == 红  false == 黑</span></span><br><span class="line">	Parent, Left, Right *RBNode</span><br><span class="line">	Value, Index        <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> RBTree <span class="keyword">struct</span> &#123;</span><br><span class="line">	Root *RBNode</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 对红黑树的节点(x)进行左旋转</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* 左旋示意图(对节点 x 进行左旋)：</span></span><br><span class="line"><span class="comment">*      px                              px</span></span><br><span class="line"><span class="comment">*     /                               /</span></span><br><span class="line"><span class="comment">*    x                               y</span></span><br><span class="line"><span class="comment">*   /  \\      --(左旋)-.           / \\                #</span></span><br><span class="line"><span class="comment">*  lx   y                          x  ry</span></span><br><span class="line"><span class="comment">*     /   \\                       /  \\</span></span><br><span class="line"><span class="comment">*    ly   ry                     lx  ly</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *RBTree)</span></span> leftSpin(node *RBNode) &#123;</span><br><span class="line">	<span class="comment">// 先提出自己的 右子</span></span><br><span class="line">	y := node.Right</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 自己的新右子 是前右子的左子</span></span><br><span class="line">	node.Right = y.Left</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> != y.Left &#123;</span><br><span class="line">		y.Left.Parent = node</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 你以前的爹，就是我现在的爹</span></span><br><span class="line">	y.Parent = node.Parent</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果被旋转的节点是 之前树的根</span></span><br><span class="line">	<span class="comment">// 那么，新的跟就是 y 节点</span></span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> == node.Parent &#123;</span><br><span class="line">		t.Root = y</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123; <span class="comment">// 被旋转的是普通节点时, 需要结合自身的父亲来确认自己之前是属于 左子还是右子</span></span><br><span class="line">		<span class="keyword">if</span> node.Parent.Left == node &#123; <span class="comment">// 被旋转节点之前是 左子时</span></span><br><span class="line">			<span class="comment">// 用 y 来作为之前 该节点父亲的 新左子</span></span><br><span class="line">			node.Parent.Left = y</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123; <span class="comment">// 否则，是 右子</span></span><br><span class="line">			node.Parent.Right = y</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 将 node 设为 y 的左子</span></span><br><span class="line">	y.Left = node</span><br><span class="line">	<span class="comment">// 将 y 设为 node 的新父亲</span></span><br><span class="line">	node.Parent = y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 对红黑树的节点(y)进行右旋转</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 右旋示意图(对节点 y 进行左旋)：</span></span><br><span class="line"><span class="comment"> *            py                               py</span></span><br><span class="line"><span class="comment"> *           /                                /</span></span><br><span class="line"><span class="comment"> *          y                                x</span></span><br><span class="line"><span class="comment"> *         /  \\      --(右旋)-.            /  \\                     #</span></span><br><span class="line"><span class="comment"> *        x   ry                           lx   y</span></span><br><span class="line"><span class="comment"> *       / \\                                   / \\                   #</span></span><br><span class="line"><span class="comment"> *      lx  rx                                rx  ry</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *RBTree)</span></span> rightSpin(node *RBNode) &#123;</span><br><span class="line">	<span class="comment">// 先提出自己的 左子</span></span><br><span class="line">	x := node.Left</span><br><span class="line">	node.Left = x.Right</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> != x.Left &#123;</span><br><span class="line">		x.Right.Parent = node</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	x.Parent = node.Parent</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果被旋转的节点是 之前树的根</span></span><br><span class="line">	<span class="comment">// 那么，新的跟就是 x 节点</span></span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> == node.Parent &#123;</span><br><span class="line">		t.Root = x</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> node.Parent.Right == node &#123;</span><br><span class="line">			node.Parent.Right = x</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			node.Parent.Left = x</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	x.Right = node</span><br><span class="line"></span><br><span class="line">	node.Parent = x</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">insertValue</span><span class="params">(tree *RBTree, val, index <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	node := &amp;RBNode&#123;Value: val, Index: index, Color: BLACK&#125;</span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> == tree.Root &#123;</span><br><span class="line">		tree.Root = node</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		tree.insert(node)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *RBTree)</span></span> insert(node *RBNode) &#123;</span><br><span class="line">	<span class="comment">//int cmp;</span></span><br><span class="line">	<span class="keyword">var</span> tmpNode *RBNode</span><br><span class="line">	root := t.Root</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 1. 将红黑树当作一颗二叉查找树，将节点添加到二叉查找树中。</span></span><br><span class="line">	<span class="keyword">for</span> <span class="literal">nil</span> != root &#123;</span><br><span class="line">		<span class="keyword">if</span> node.Value &lt; root.Value &#123;</span><br><span class="line">			root = root.Left</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			root = root.Right</span><br><span class="line">		&#125;</span><br><span class="line">		tmpNode = root</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	node.Parent = tmpNode</span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> != tmpNode &#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> node.Value &lt; tmpNode.Value &#123;</span><br><span class="line">			tmpNode.Left = node</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			tmpNode.Right = node</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		t.Root = node</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 2. 设置节点的颜色为红色</span></span><br><span class="line">	node.Color = RED</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 3. 将它重新修正为一颗二叉查找树</span></span><br><span class="line">	t.adjustRBTree(node)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修正树</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *RBTree)</span></span> adjustRBTree(node *RBNode) &#123;</span><br><span class="line">	<span class="keyword">var</span> parent, gparent *RBNode <span class="comment">// 父亲 和 祖父</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 若“父节点存在，并且父节点的颜色是红色”</span></span><br><span class="line">	<span class="keyword">for</span> <span class="literal">nil</span> != node.Parent &amp;&amp; RED == node.Parent.Color &#123;</span><br><span class="line">		parent = node.Parent</span><br><span class="line">		gparent = parent.Parent</span><br><span class="line"></span><br><span class="line">		<span class="comment">//若“父节点”是“祖父节点的左孩子”</span></span><br><span class="line">		<span class="keyword">if</span> parent == gparent.Left &#123;</span><br><span class="line">			<span class="comment">// Case 1条件：叔叔节点是红色</span></span><br><span class="line">			uncle := gparent.Right</span><br><span class="line">			<span class="keyword">if</span> <span class="literal">nil</span> != uncle &amp;&amp; RED == uncle.Color &#123;</span><br><span class="line">				uncle.Color = BLACK</span><br><span class="line">				parent.Color = BLACK</span><br><span class="line">				gparent.Color = RED</span><br><span class="line">				node = gparent</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Case 2条件：叔叔是黑色，且当前节点是右孩子</span></span><br><span class="line">			<span class="keyword">if</span> node == parent.Right &#123;</span><br><span class="line">				<span class="keyword">var</span> tmp *RBNode</span><br><span class="line">				t.leftSpin(parent)</span><br><span class="line">				tmp = parent</span><br><span class="line">				parent = node</span><br><span class="line">				node = tmp</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Case 3条件：叔叔是黑色，且当前节点是左孩子。</span></span><br><span class="line">			parent.Color = BLACK</span><br><span class="line">			gparent.Color = RED</span><br><span class="line">			t.rightSpin(gparent)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123; <span class="comment">//若“z的父节点”是“z的祖父节点的右孩子”</span></span><br><span class="line">			<span class="comment">// Case 1条件：叔叔节点是红色</span></span><br><span class="line">			uncle := gparent.Left</span><br><span class="line">			<span class="keyword">if</span> <span class="literal">nil</span> != uncle &amp;&amp; RED == uncle.Color &#123;</span><br><span class="line">				uncle.Color = BLACK</span><br><span class="line">				parent.Color = BLACK</span><br><span class="line">				gparent.Color = RED</span><br><span class="line">				node = gparent</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Case 2条件：叔叔是黑色，且当前节点是左孩子</span></span><br><span class="line">			<span class="keyword">if</span> node == parent.Left &#123;</span><br><span class="line">				<span class="keyword">var</span> tmp *RBNode</span><br><span class="line">				t.rightSpin(parent)</span><br><span class="line">				tmp = parent</span><br><span class="line">				parent = node</span><br><span class="line">				node = tmp</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Case 3条件：叔叔是黑色，且当前节点是右孩子。</span></span><br><span class="line">			parent.Color = BLACK</span><br><span class="line">			gparent.Color = RED</span><br><span class="line">			t.leftSpin(gparent)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 将根节点设为黑色</span></span><br><span class="line">	t.Root.Color = BLACK</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">红黑树查找</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">RedBlackTreeSearch</span><span class="params">(arr []<span class="type">int</span>, key <span class="type">int</span>)</span></span> <span class="type">int</span>&#123;</span><br><span class="line">	<span class="comment">// 先构造树</span></span><br><span class="line">	tree := <span class="built_in">new</span>(RBTree)</span><br><span class="line">	<span class="keyword">for</span> i, v := <span class="keyword">range</span> arr &#123;</span><br><span class="line">		insertValue(tree, v, i)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 开始二叉树查找目标key</span></span><br><span class="line">	<span class="keyword">return</span> tree.serch(key)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *RBTree)</span></span> serch(key <span class="type">int</span>) <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> serch(t.Root, key)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">serch</span><span class="params">(node *RBNode, key <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> == node &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> key &lt; node.Value &#123;</span><br><span class="line">		<span class="keyword">return</span> serch(node.Left, key)</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> key &gt; node.Value &#123;</span><br><span class="line">		<span class="keyword">return</span> serch(node.Right, key)</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> node.Index</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法</category>
+        <category>查找算法</category>
+        <category>树查找</category>
+      </categories>
+      <tags>
+        <tag>查找算法</tag>
+        <tag>二叉树</tag>
+        <tag>树</tag>
+      </tags>
+  </entry>
+</search>

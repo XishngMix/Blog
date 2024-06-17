@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="从零到一，不断前进" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> XiShng Blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      
+<section class="cover">
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="/images/cover1.jpg" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">XiShng Blog</a></h1>
+      <div id="subtitle-box">
+        
+          <span id="subtitle">既往拼搏，守护一生所爱</span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+
+<!-- Subtitle -->
+
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-withe_snake/algorithm/navigation/search/tree/Balanced_B_Tree_Search"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/06/26/withe_snake/algorithm/navigation/search/tree/Balanced_B_Tree_Search/"
+    >平衡二叉树查找算法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/06/26/withe_snake/algorithm/navigation/search/tree/Balanced_B_Tree_Search/" class="article-date">
+  <time datetime="2022-06-26T01:19:17.000Z" itemprop="datePublished">2022-06-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a> / <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/">查找算法</a> / <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/%E6%A0%91%E6%9F%A5%E6%89%BE/">树查找</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h1><p><strong>树</strong>是一种计算机数据结构中非常常用的一种结构，其中就包含了：平衡二叉树，这种树是一种特殊的二叉查找树(二叉查找树也就是，右孩子大于其父结点，左孩子小于其父结点的树)，但是简单的二叉查找树存在的问题就是不平衡，最差的查找效率为O(n)，故就有人发明了一种平衡的额二叉查找树。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>平衡二叉树是一种二叉查找树<br>每个结点的左子树的高度减去右子树的高度的绝对值不超过1<br>空树和左右子树都是平衡二叉树<br>相比红黑树，平衡二叉树比较适用于没有删除的情况</p>
+<h3 id="平衡因子"><a href="#平衡因子" class="headerlink" title="平衡因子"></a>平衡因子</h3><p>平衡二叉树是在二叉查查找树的基础上进行构建了，为了维持平衡二叉树的平衡，那么就需要一种机制来判断平衡二叉树是否是平衡的。这种机制就叫做平衡因子。</p>
+<p>平衡二叉树的每个结点都会维持一个值，这个值就是平衡因子，这个平衡因子就是这个结点的左子树的高度减去右子树的高度得到的值。如果这个平衡因子的值的绝对值大于1了，说明这个树就不平衡了，那么就需要调整树的结构了。</p>
+<p>我们可以从如上这个这个图中看的到：每个结点都维持了一个值，比如左边的AVL 树根结点的值为-1，这个-1是怎么来的呢，就是结点3的左子树的高度为 2, 右子树的高度为 3, 左子树的高度减去右子树的高度就得到这个结点的平衡因子。</p>
+<p>如果某个结点的平衡因子的绝对值大于了 1 ，那么就说明这个平衡二叉树不平衡了，就需要调整平衡二叉树的结构。</p>
+<p><img src="http://pic.xishng.top/img/202201171140140.png" alt="平衡因子"></p>
+<h2 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h2><p>由于AVL树需要做到平衡，所以每次插入叶子节点，如果发现不平衡，都需要进行旋转以保持平衡。</p>
+<p>下面是旋转图例，可以参考的看下：</p>
+<p><img src="http://pic.xishng.top/img/202201171141598.png" alt="旋转"></p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> AVL <span class="keyword">struct</span> &#123;</span><br><span class="line">	value  <span class="type">int</span>  <span class="comment">//值</span></span><br><span class="line">	height <span class="type">int</span>  <span class="comment">//深度</span></span><br><span class="line">	left   *AVL <span class="comment">//左子树</span></span><br><span class="line">	right  *AVL <span class="comment">//右子树</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Search 查找元素</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> Search(value <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> value &lt; t.value &#123;</span><br><span class="line">		<span class="keyword">return</span> t.left.Search(value)</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> value &gt; t.value &#123;</span><br><span class="line">		<span class="keyword">return</span> t.right.Search(value)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Insert 添加元素</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> Insert(value <span class="type">int</span>) *AVL &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		newNode := AVL&#123;value, <span class="number">1</span>, <span class="literal">nil</span>, <span class="literal">nil</span>&#125;</span><br><span class="line">		<span class="keyword">return</span> &amp;newNode</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> value &lt; t.value &#123;</span><br><span class="line">		t.left = t.left.Insert(value)</span><br><span class="line">		t = t.adjust()</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> value &gt; t.value &#123;</span><br><span class="line">		t.right = t.right.Insert(value)</span><br><span class="line">		t = t.adjust()</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;the node exit&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	t.height = max(t.left.getHeight(), t.right.getHeight()) + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Delete</span></span><br><span class="line"><span class="comment">	删除元素</span></span><br><span class="line"><span class="comment">		*1、如果被删除结点只有一个子结点，就直接将A的子结点连至A的父结点上，并将A删除</span></span><br><span class="line"><span class="comment">		*2、如果被删除结点有两个子结点，将该结点右子数内的最小结点取代A。</span></span><br><span class="line"><span class="comment">		*3、查看是否平衡, 如果不平衡，就调整</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> Delete(value <span class="type">int</span>) *AVL &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> t</span><br><span class="line">	&#125;</span><br><span class="line">	compare := value - t.value</span><br><span class="line">	<span class="keyword">if</span> compare &lt; <span class="number">0</span> &#123;</span><br><span class="line">		t.left = t.left.Delete(value)</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> compare &gt; <span class="number">0</span> &#123;</span><br><span class="line">		t.right = t.right.Delete(value)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123; <span class="comment">//找到结点,删除结点（）</span></span><br><span class="line">		<span class="keyword">if</span> t.left != <span class="literal">nil</span> &amp;&amp; t.right != <span class="literal">nil</span> &#123;</span><br><span class="line">			t.value = t.right.getMin()</span><br><span class="line">			t.right = t.right.Delete(t.value)</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> t.left != <span class="literal">nil</span> &#123;</span><br><span class="line">			t = t.left</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123; <span class="comment">//只有一个右孩子或没孩子</span></span><br><span class="line">			t = t.right</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> t != <span class="literal">nil</span> &#123;</span><br><span class="line">		t.height = max(t.left.getHeight(), t.right.getHeight()) + <span class="number">1</span></span><br><span class="line">		t = t.adjust()</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// adjust 判断是否需要旋转</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> adjust() *AVL &#123;</span><br><span class="line">	<span class="keyword">if</span> t.right.getHeight()-t.left.getHeight() == <span class="number">2</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> t.right.right.getHeight() &gt; t.right.left.getHeight() &#123;</span><br><span class="line">			t = t.leftRotate()</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			t = t.rightThenLeftRotate()</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> t.left.getHeight()-t.right.getHeight() == <span class="number">2</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> t.left.left.getHeight() &gt; t.left.right.getHeight() &#123;</span><br><span class="line">			t = t.rightRotate()</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			t = t.LeftThenRightRotate()</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// leftRotate 左旋</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> leftRotate() *AVL &#123;</span><br><span class="line">	headNode := t.right</span><br><span class="line">	t.right = headNode.left</span><br><span class="line">	headNode.left = t</span><br><span class="line"></span><br><span class="line">	<span class="comment">//更新结点高度</span></span><br><span class="line">	t.height = max(t.left.getHeight(), t.right.getHeight()) + <span class="number">1</span></span><br><span class="line">	headNode.height = max(headNode.left.getHeight(), headNode.right.getHeight()) + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> headNode</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// rightRotate 右旋</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> rightRotate() *AVL &#123;</span><br><span class="line">	headNode := t.left</span><br><span class="line">	t.left = headNode.right</span><br><span class="line">	headNode.right = t</span><br><span class="line"></span><br><span class="line">	<span class="comment">//更新结点高度</span></span><br><span class="line">	t.height = max(t.left.getHeight(), t.right.getHeight()) + <span class="number">1</span></span><br><span class="line">	headNode.height = max(headNode.left.getHeight(), headNode.right.getHeight()) + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> headNode</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// rightThenLeftRotate 右旋转,之后左旋转</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> rightThenLeftRotate() *AVL &#123;</span><br><span class="line">	<span class="comment">//以失衡点右结点先右旋转</span></span><br><span class="line">	sonHeadNode := t.right.rightRotate()</span><br><span class="line">	t.right = sonHeadNode</span><br><span class="line"></span><br><span class="line">	<span class="comment">//再以失衡点左旋转</span></span><br><span class="line">	<span class="keyword">return</span> t.leftRotate()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// LeftThenRightRotate 左旋转,之后右旋转</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> LeftThenRightRotate() *AVL &#123;</span><br><span class="line">	<span class="comment">//以失衡点左结点先左旋转</span></span><br><span class="line">	sonHeadNode := t.left.leftRotate()</span><br><span class="line">	t.left = sonHeadNode</span><br><span class="line">	<span class="comment">//再以失衡点左旋转</span></span><br><span class="line">	<span class="keyword">return</span> t.rightRotate()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getAll 按顺序获得树中元素</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> getAll() []<span class="type">int</span> &#123;</span><br><span class="line">	values := []<span class="type">int</span>&#123;&#125;</span><br><span class="line">	<span class="keyword">return</span> addValues(values, t)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// addValues 将一个节点加入切片中</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addValues</span><span class="params">(values []<span class="type">int</span>, t *AVL)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> t != <span class="literal">nil</span> &#123;</span><br><span class="line">		values = addValues(values, t.left)</span><br><span class="line">		values = <span class="built_in">append</span>(values, t.value)</span><br><span class="line">		fmt.Println(t.value, t.height)</span><br><span class="line">		values = addValues(values, t.right)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> values</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getMin 查找子树最小值</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> getMin() <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> t.left == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> t.value</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> t.left.getMin()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getMax 查找子树最大值</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> getMax() <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> t.right == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> t.value</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> t.right.getMax()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getMinNode 查找最小结点</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> getMinNode() *AVL &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> t.left != <span class="literal">nil</span> &#123;</span><br><span class="line">			t = t.left</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getMaxNode 查找最大结点</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> getMaxNode() *AVL &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> t.right != <span class="literal">nil</span> &#123;</span><br><span class="line">			t = t.right</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getHeight 得到树高</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *AVL)</span></span> getHeight() <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> t == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t.height</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// max 最深节点高度</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">max</span><span class="params">(a <span class="type">int</span>, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> a &gt; b &#123;</span><br><span class="line">		<span class="keyword">return</span> a</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> b</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	bsTree := AVL&#123;<span class="number">100</span>, <span class="number">1</span>, <span class="literal">nil</span>, <span class="literal">nil</span>&#125;</span><br><span class="line">	newTree := bsTree.Insert(<span class="number">60</span>)</span><br><span class="line">	newTree = bsTree.Insert(<span class="number">120</span>)</span><br><span class="line">	newTree = bsTree.Insert(<span class="number">110</span>)</span><br><span class="line">	newTree = bsTree.Insert(<span class="number">130</span>)</span><br><span class="line">	newTree = bsTree.Insert(<span class="number">105</span>)</span><br><span class="line">	fmt.Println(newTree.getAll())</span><br><span class="line"></span><br><span class="line">	newTree.Delete(<span class="number">110</span>)</span><br><span class="line">	fmt.Println(newTree.getAll())</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/B%E6%A0%91/" rel="tag">B树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/" rel="tag">查找算法</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-withe_snake/algorithm/navigation/search/tree/Binary_Tree_Search"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/06/26/withe_snake/algorithm/navigation/search/tree/Binary_Tree_Search/"
+    >二叉树查找</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/06/26/withe_snake/algorithm/navigation/search/tree/Binary_Tree_Search/" class="article-date">
+  <time datetime="2022-06-26T01:19:17.000Z" itemprop="datePublished">2022-06-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a> / <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/">查找算法</a> / <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/%E6%A0%91%E6%9F%A5%E6%89%BE/">树查找</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="二叉树查找"><a href="#二叉树查找" class="headerlink" title="二叉树查找"></a>二叉树查找</h1><blockquote>
+<p>二叉查找树是先对待查找的数据进行生成树，确保树的左分支的值小于右分支的值，然后再用所查数据和每个节点的父节点比较大小，查找最适合的范围。 这个算法的查找效率很高，但是如果使用这种查找方法要首先创建树。</p>
+<p>适用场景：</p>
+<blockquote>
+<p>前面的几种查找算法因为都是适用于有序集，在插入和删除操作上就需要耗费大量的时间。有没有一种既可以使得插入和删除效率不错，又可以比较高效的实现查找的算法。</p>
+<p><strong>二叉查找树</strong>（BinarySearch Tree，也叫二叉搜索树，或称二叉排序树Binary Sort Tree）或者是一棵空树，或者是具有下列性质的二叉树：</p>
+<blockquote>
+<p>1）若任意节点的左子树不空，则左子树上所有结点的值均小于它的根结点的值；</p>
+<p>2）若任意节点的右子树不空，则右子树上所有结点的值均大于它的根结点的值；</p>
+<p>3）任意节点的左、右子树也分别为二叉查找树。</p>
+<ul>
+<li><em>二叉查找树性质：对二叉查找树进行中序遍历，即可得到有序的数列</em>。</li>
+</ul>
+</blockquote>
+</blockquote>
+<p>如代码：</p>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">基本思路：先把数组构造出一颗二叉树的样纸，然后查找的时候在从root往下对比</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BSTsearch</span><span class="params">(arr []<span class="type">int</span>, key <span class="type">int</span>)</span></span> <span class="type">int</span>&#123;</span><br><span class="line">	<span class="comment">// 先在内存中构造 二叉树</span></span><br><span class="line">	tree := <span class="built_in">new</span>(Tree)</span><br><span class="line">	<span class="keyword">for</span> i, v := <span class="keyword">range</span> arr &#123;</span><br><span class="line">		Insert(tree, v, i)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 开始二叉树查找目标key</span></span><br><span class="line">	<span class="keyword">return</span> searchKey(tree.Root, key)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 节点结构</span></span><br><span class="line"><span class="keyword">type</span> Node <span class="keyword">struct</span> &#123;</span><br><span class="line">	Value, Index <span class="type">int</span>  <span class="comment">// 元素的值和在数组中的位置</span></span><br><span class="line">	Left, Right *Node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 树结构</span></span><br><span class="line"><span class="keyword">type</span> Tree <span class="keyword">struct</span> &#123;</span><br><span class="line">	Root *Node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把数组的的元素插入树中</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Insert</span><span class="params">(tree *Tree, value, index <span class="type">int</span>)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> == tree.Root &#123;</span><br><span class="line">		tree.Root = newNode(value, index)</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		InsertNode(tree.Root, newNode(value, index))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把新增的节点插入树的对应位置</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InsertNode</span><span class="params">(root, childNode *Node)</span></span> &#123;</span><br><span class="line">	<span class="comment">// 否则，先和根的值对比</span></span><br><span class="line">	<span class="keyword">if</span> childNode.Value &lt;= root.Value &#123;</span><br><span class="line">		<span class="comment">// 如果小于等于跟的值，则插入到左子树</span></span><br><span class="line">		<span class="keyword">if</span>  <span class="literal">nil</span> == root.Left &#123;</span><br><span class="line">			root.Left = childNode</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			InsertNode(root.Left, childNode)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="comment">// 否则，插入到右子树</span></span><br><span class="line">		<span class="keyword">if</span> <span class="literal">nil</span> == root.Right &#123;</span><br><span class="line">			root.Right = childNode</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			InsertNode(root.Right, childNode)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newNode</span><span class="params">(value, index <span class="type">int</span>)</span></span> *Node &#123;</span><br><span class="line">	<span class="keyword">return</span> &amp;Node&#123;</span><br><span class="line">		Value: value,</span><br><span class="line">		Index: index,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在构建好的二叉树中，从root开始往下查找对应的key 返回其在数组中的位置</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">searchKey</span><span class="params">(root *Node, key <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> == root &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>  key == root.Value &#123;</span><br><span class="line">		<span class="keyword">return</span> root.Index</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> key &lt; root.Value &#123;</span><br><span class="line">		<span class="comment">// 往左子树查找</span></span><br><span class="line">		<span class="keyword">return</span> searchKey(root.Left, key)</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">// 往右子树查找</span></span><br><span class="line">		<span class="keyword">return</span> searchKey(root.Right, key)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/" rel="tag">查找算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-withe_snake/algorithm/navigation/search/tree/Red_Black_Tree_Search"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/06/26/withe_snake/algorithm/navigation/search/tree/Red_Black_Tree_Search/"
+    >红黑树查找</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/06/26/withe_snake/algorithm/navigation/search/tree/Red_Black_Tree_Search/" class="article-date">
+  <time datetime="2022-06-26T01:19:17.000Z" itemprop="datePublished">2022-06-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a> / <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/">查找算法</a> / <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/%E6%A0%91%E6%9F%A5%E6%89%BE/">树查找</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="红黑树查找"><a href="#红黑树查找" class="headerlink" title="红黑树查找"></a>红黑树查找</h1><blockquote>
+<p>红黑树查找：</p>
+<p><strong>它一种特殊的二叉查找树。红黑树的每个节点上都有存储位表示节点的颜色，可以是红(Red)或黑(Black)。红黑树是2-3树的一种简单高效的实现。</strong></p>
+<p><strong>红黑树的特性</strong>:</p>
+<blockquote>
+<p>（1）每个节点或者是黑色，或者是红色。（2）根节点是黑色。（3）每个叶子节点（NIL）是黑色。 [注意：这里叶子节点，是指为空(NIL或NULL)的叶子节点！]（4）如果一个节点是红色的，则它的子节点必须是黑色的。（5）从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。</p>
+</blockquote>
+<p>如图所示:</p>
+<p><img src="http://pic.xishng.top/img/202201171142665.png" alt="红黑树的特性"></p>
+<p><strong>基本思路:</strong> 红黑树的基本操作是<strong>添加、删除</strong>。在对红黑树进行添加或删除之后，都会用到旋转方法。为什么呢？道理很简单，添加或删除红黑树中的节点之后，红黑树就发生了变化，可能不满足红黑树的5条性质，也就不再是一颗红黑树了，而是一颗普通的树。而通过旋转，可以使这颗树重新成为红黑树。简单点说，旋转的目的是让树保持红黑树的特性。</p>
+<p>旋转包括两种：<strong>左旋</strong> 和 <strong>右旋</strong>。</p>
+<blockquote>
+<p><strong>左旋示意图：</strong></p>
+<p><img src="http://pic.xishng.top/img/202201171142147.png" alt="左旋示意图"></p>
+</blockquote>
+<blockquote>
+<p><strong>完整左旋示意图:</strong></p>
+<p><img src="http://pic.xishng.top/img/202201171143136.png" alt="完整左旋示意图"></p>
+</blockquote>
+<blockquote>
+<p><strong>右旋示意图：</strong></p>
+<p><img src="http://pic.xishng.top/img/202201171143565.png" alt="右旋示意图"></p>
+</blockquote>
+<blockquote>
+<p><strong>完整右旋示意图：</strong></p>
+<p><img src="http://pic.xishng.top/img/202201171143373.png" alt="完整右旋示意图"></p>
+</blockquote>
+<p><strong>无论是左旋还是右旋，被旋转的树，在旋转前是二叉查找树，并且旋转之后仍然是一颗二叉查找树。(二叉查找树：左子 &lt; 根 &lt; 右子)</strong></p>
+<p><img src="http://pic.xishng.top/img/202201171143843.png" alt="二叉查找树：左子 &lt; 根 &lt; 右子"></p>
+<ul>
+<li>可见：<ul>
+<li>左旋中的“左”，意味着“被旋转的节点将变成一个左节点”；</li>
+<li>右旋中的“右”，意味着“被旋转的节点将变成一个右节点”。</li>
+</ul>
+</li>
+</ul>
+<h2 id="节点的插入："><a href="#节点的插入：" class="headerlink" title="节点的插入："></a>节点的插入：</h2><blockquote>
+<p>将红黑树当作一颗二叉查找树，将节点插入将节点着色为红色通过旋转和重新着色等方法来修正该树，使之重新成为一颗红黑树。</p>
+</blockquote>
+<p>为什么着色成红色，而不是黑色呢？</p>
+<blockquote>
+<p>在回答之前，我们需要重新温习一下红黑树的特性：</p>
+<blockquote>
+<p>(1) 每个节点或者是黑色，或者是红色。<br>(2) 根节点是黑色。<br>(3) 每个叶子节点是黑色。 [注意：这里叶子节点，是指为空的叶子节点！]<br>(4) 如果一个节点是红色的，则它的子节点必须是黑色的。<br>(5) 从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。</p>
+</blockquote>
+<p>将插入的节点着色为红色，不会违背”特性(5)”！少违背一条特性，就意味着我们需要处理的情况越少。接下来，就要努力的让这棵树满足其它性质即可；满足了的话，它就又是一颗红黑树了。</p>
+</blockquote>
+<p><strong>将插入节点着色为”红色”之后，不会违背”特性(5)”。那它到底会违背哪些特性呢？</strong></p>
+<blockquote>
+<p>对于”特性(1)”，显然不会违背了。因为我们已经将它涂成红色了。<br> 对于”特性(2)”，显然也不会违背。在第一步中，我们是将红黑树当作二叉查找树，然后执行的插入操作。而根据二叉查找数的特点，插入操作不会改变根节点。所以，根节点仍然是黑色。<br>对于”特性(3)”，显然不会违背了。这里的叶子节点是指的空叶子节点，插入非空节点并不会对它们造成影响。<br>对于”特性(4)”，是有可能违背的！</p>
+</blockquote>
+<p>**那接下来，想办法使之”满足特性(4)”**，就可以将树重新构造成红黑树了。<br> <br> 代码如下：</p>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	RED   = <span class="literal">true</span></span><br><span class="line">	BLACK = <span class="literal">false</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 节点</span></span><br><span class="line"><span class="keyword">type</span> RBNode <span class="keyword">struct</span> &#123;</span><br><span class="line">	Color               <span class="type">bool</span> <span class="comment">// true == 红  false == 黑</span></span><br><span class="line">	Parent, Left, Right *RBNode</span><br><span class="line">	Value, Index        <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> RBTree <span class="keyword">struct</span> &#123;</span><br><span class="line">	Root *RBNode</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 对红黑树的节点(x)进行左旋转</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* 左旋示意图(对节点 x 进行左旋)：</span></span><br><span class="line"><span class="comment">*      px                              px</span></span><br><span class="line"><span class="comment">*     /                               /</span></span><br><span class="line"><span class="comment">*    x                               y</span></span><br><span class="line"><span class="comment">*   /  \\      --(左旋)-.           / \\                #</span></span><br><span class="line"><span class="comment">*  lx   y                          x  ry</span></span><br><span class="line"><span class="comment">*     /   \\                       /  \\</span></span><br><span class="line"><span class="comment">*    ly   ry                     lx  ly</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *RBTree)</span></span> leftSpin(node *RBNode) &#123;</span><br><span class="line">	<span class="comment">// 先提出自己的 右子</span></span><br><span class="line">	y := node.Right</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 自己的新右子 是前右子的左子</span></span><br><span class="line">	node.Right = y.Left</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> != y.Left &#123;</span><br><span class="line">		y.Left.Parent = node</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 你以前的爹，就是我现在的爹</span></span><br><span class="line">	y.Parent = node.Parent</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果被旋转的节点是 之前树的根</span></span><br><span class="line">	<span class="comment">// 那么，新的跟就是 y 节点</span></span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> == node.Parent &#123;</span><br><span class="line">		t.Root = y</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123; <span class="comment">// 被旋转的是普通节点时, 需要结合自身的父亲来确认自己之前是属于 左子还是右子</span></span><br><span class="line">		<span class="keyword">if</span> node.Parent.Left == node &#123; <span class="comment">// 被旋转节点之前是 左子时</span></span><br><span class="line">			<span class="comment">// 用 y 来作为之前 该节点父亲的 新左子</span></span><br><span class="line">			node.Parent.Left = y</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123; <span class="comment">// 否则，是 右子</span></span><br><span class="line">			node.Parent.Right = y</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 将 node 设为 y 的左子</span></span><br><span class="line">	y.Left = node</span><br><span class="line">	<span class="comment">// 将 y 设为 node 的新父亲</span></span><br><span class="line">	node.Parent = y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 对红黑树的节点(y)进行右旋转</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 右旋示意图(对节点 y 进行左旋)：</span></span><br><span class="line"><span class="comment"> *            py                               py</span></span><br><span class="line"><span class="comment"> *           /                                /</span></span><br><span class="line"><span class="comment"> *          y                                x</span></span><br><span class="line"><span class="comment"> *         /  \\      --(右旋)-.            /  \\                     #</span></span><br><span class="line"><span class="comment"> *        x   ry                           lx   y</span></span><br><span class="line"><span class="comment"> *       / \\                                   / \\                   #</span></span><br><span class="line"><span class="comment"> *      lx  rx                                rx  ry</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *RBTree)</span></span> rightSpin(node *RBNode) &#123;</span><br><span class="line">	<span class="comment">// 先提出自己的 左子</span></span><br><span class="line">	x := node.Left</span><br><span class="line">	node.Left = x.Right</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> != x.Left &#123;</span><br><span class="line">		x.Right.Parent = node</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	x.Parent = node.Parent</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果被旋转的节点是 之前树的根</span></span><br><span class="line">	<span class="comment">// 那么，新的跟就是 x 节点</span></span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> == node.Parent &#123;</span><br><span class="line">		t.Root = x</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> node.Parent.Right == node &#123;</span><br><span class="line">			node.Parent.Right = x</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			node.Parent.Left = x</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	x.Right = node</span><br><span class="line"></span><br><span class="line">	node.Parent = x</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">insertValue</span><span class="params">(tree *RBTree, val, index <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	node := &amp;RBNode&#123;Value: val, Index: index, Color: BLACK&#125;</span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> == tree.Root &#123;</span><br><span class="line">		tree.Root = node</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		tree.insert(node)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *RBTree)</span></span> insert(node *RBNode) &#123;</span><br><span class="line">	<span class="comment">//int cmp;</span></span><br><span class="line">	<span class="keyword">var</span> tmpNode *RBNode</span><br><span class="line">	root := t.Root</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 1. 将红黑树当作一颗二叉查找树，将节点添加到二叉查找树中。</span></span><br><span class="line">	<span class="keyword">for</span> <span class="literal">nil</span> != root &#123;</span><br><span class="line">		<span class="keyword">if</span> node.Value &lt; root.Value &#123;</span><br><span class="line">			root = root.Left</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			root = root.Right</span><br><span class="line">		&#125;</span><br><span class="line">		tmpNode = root</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	node.Parent = tmpNode</span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> != tmpNode &#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> node.Value &lt; tmpNode.Value &#123;</span><br><span class="line">			tmpNode.Left = node</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			tmpNode.Right = node</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		t.Root = node</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 2. 设置节点的颜色为红色</span></span><br><span class="line">	node.Color = RED</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 3. 将它重新修正为一颗二叉查找树</span></span><br><span class="line">	t.adjustRBTree(node)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修正树</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *RBTree)</span></span> adjustRBTree(node *RBNode) &#123;</span><br><span class="line">	<span class="keyword">var</span> parent, gparent *RBNode <span class="comment">// 父亲 和 祖父</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 若“父节点存在，并且父节点的颜色是红色”</span></span><br><span class="line">	<span class="keyword">for</span> <span class="literal">nil</span> != node.Parent &amp;&amp; RED == node.Parent.Color &#123;</span><br><span class="line">		parent = node.Parent</span><br><span class="line">		gparent = parent.Parent</span><br><span class="line"></span><br><span class="line">		<span class="comment">//若“父节点”是“祖父节点的左孩子”</span></span><br><span class="line">		<span class="keyword">if</span> parent == gparent.Left &#123;</span><br><span class="line">			<span class="comment">// Case 1条件：叔叔节点是红色</span></span><br><span class="line">			uncle := gparent.Right</span><br><span class="line">			<span class="keyword">if</span> <span class="literal">nil</span> != uncle &amp;&amp; RED == uncle.Color &#123;</span><br><span class="line">				uncle.Color = BLACK</span><br><span class="line">				parent.Color = BLACK</span><br><span class="line">				gparent.Color = RED</span><br><span class="line">				node = gparent</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Case 2条件：叔叔是黑色，且当前节点是右孩子</span></span><br><span class="line">			<span class="keyword">if</span> node == parent.Right &#123;</span><br><span class="line">				<span class="keyword">var</span> tmp *RBNode</span><br><span class="line">				t.leftSpin(parent)</span><br><span class="line">				tmp = parent</span><br><span class="line">				parent = node</span><br><span class="line">				node = tmp</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Case 3条件：叔叔是黑色，且当前节点是左孩子。</span></span><br><span class="line">			parent.Color = BLACK</span><br><span class="line">			gparent.Color = RED</span><br><span class="line">			t.rightSpin(gparent)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123; <span class="comment">//若“z的父节点”是“z的祖父节点的右孩子”</span></span><br><span class="line">			<span class="comment">// Case 1条件：叔叔节点是红色</span></span><br><span class="line">			uncle := gparent.Left</span><br><span class="line">			<span class="keyword">if</span> <span class="literal">nil</span> != uncle &amp;&amp; RED == uncle.Color &#123;</span><br><span class="line">				uncle.Color = BLACK</span><br><span class="line">				parent.Color = BLACK</span><br><span class="line">				gparent.Color = RED</span><br><span class="line">				node = gparent</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Case 2条件：叔叔是黑色，且当前节点是左孩子</span></span><br><span class="line">			<span class="keyword">if</span> node == parent.Left &#123;</span><br><span class="line">				<span class="keyword">var</span> tmp *RBNode</span><br><span class="line">				t.rightSpin(parent)</span><br><span class="line">				tmp = parent</span><br><span class="line">				parent = node</span><br><span class="line">				node = tmp</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Case 3条件：叔叔是黑色，且当前节点是右孩子。</span></span><br><span class="line">			parent.Color = BLACK</span><br><span class="line">			gparent.Color = RED</span><br><span class="line">			t.leftSpin(gparent)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 将根节点设为黑色</span></span><br><span class="line">	t.Root.Color = BLACK</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">红黑树查找</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">RedBlackTreeSearch</span><span class="params">(arr []<span class="type">int</span>, key <span class="type">int</span>)</span></span> <span class="type">int</span>&#123;</span><br><span class="line">	<span class="comment">// 先构造树</span></span><br><span class="line">	tree := <span class="built_in">new</span>(RBTree)</span><br><span class="line">	<span class="keyword">for</span> i, v := <span class="keyword">range</span> arr &#123;</span><br><span class="line">		insertValue(tree, v, i)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 开始二叉树查找目标key</span></span><br><span class="line">	<span class="keyword">return</span> tree.serch(key)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *RBTree)</span></span> serch(key <span class="type">int</span>) <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> serch(t.Root, key)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">serch</span><span class="params">(node *RBNode, key <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> <span class="literal">nil</span> == node &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> key &lt; node.Value &#123;</span><br><span class="line">		<span class="keyword">return</span> serch(node.Left, key)</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> key &gt; node.Value &#123;</span><br><span class="line">		<span class="keyword">return</span> serch(node.Right, key)</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> node.Index</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/" rel="tag">查找算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/7/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/">下一页</a>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        版权 &copy;
+        2022-2024
+        <i class="ri-heart-fill heart_icon"></i> XiShng
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+        <li>
+          <a href="https://beian.miit.gov.cn/" target="_black" rel="nofollow">豫ICP备19032323号</a>
+        </li>
+        
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="XiShng Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="86"
+        src="//music.163.com/outchain/player?type=2&id=38592976&auto=0&height=66"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
+    
+    
+
+  </div>
+</body>
+
+</html>
