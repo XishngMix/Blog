@@ -121,27 +121,27 @@
 <p>（1）每个节点或者是黑色，或者是红色。（2）根节点是黑色。（3）每个叶子节点（NIL）是黑色。 [注意：这里叶子节点，是指为空(NIL或NULL)的叶子节点！]（4）如果一个节点是红色的，则它的子节点必须是黑色的。（5）从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。</p>
 </blockquote>
 <p>如图所示:</p>
-<p><img src="http://pic.xishng.top/img/202201171142665.png" alt="红黑树的特性"></p>
+<p><img src="/images/pic/202201171142665.png" alt="红黑树的特性"></p>
 <p><strong>基本思路:</strong> 红黑树的基本操作是<strong>添加、删除</strong>。在对红黑树进行添加或删除之后，都会用到旋转方法。为什么呢？道理很简单，添加或删除红黑树中的节点之后，红黑树就发生了变化，可能不满足红黑树的5条性质，也就不再是一颗红黑树了，而是一颗普通的树。而通过旋转，可以使这颗树重新成为红黑树。简单点说，旋转的目的是让树保持红黑树的特性。</p>
 <p>旋转包括两种：<strong>左旋</strong> 和 <strong>右旋</strong>。</p>
 <blockquote>
 <p><strong>左旋示意图：</strong></p>
-<p><img src="http://pic.xishng.top/img/202201171142147.png" alt="左旋示意图"></p>
+<p><img src="/images/pic/202201171142147.png" alt="左旋示意图"></p>
 </blockquote>
 <blockquote>
 <p><strong>完整左旋示意图:</strong></p>
-<p><img src="http://pic.xishng.top/img/202201171143136.png" alt="完整左旋示意图"></p>
+<p><img src="/images/pic/202201171143136.png" alt="完整左旋示意图"></p>
 </blockquote>
 <blockquote>
 <p><strong>右旋示意图：</strong></p>
-<p><img src="http://pic.xishng.top/img/202201171143565.png" alt="右旋示意图"></p>
+<p><img src="/images/pic/202201171143565.png" alt="右旋示意图"></p>
 </blockquote>
 <blockquote>
 <p><strong>完整右旋示意图：</strong></p>
-<p><img src="http://pic.xishng.top/img/202201171143373.png" alt="完整右旋示意图"></p>
+<p><img src="/images/pic/202201171143373.png" alt="完整右旋示意图"></p>
 </blockquote>
 <p><strong>无论是左旋还是右旋，被旋转的树，在旋转前是二叉查找树，并且旋转之后仍然是一颗二叉查找树。(二叉查找树：左子 &lt; 根 &lt; 右子)</strong></p>
-<p><img src="http://pic.xishng.top/img/202201171143843.png" alt="二叉查找树：左子 &lt; 根 &lt; 右子"></p>
+<p><img src="/images/pic/202201171143843.png" alt="二叉查找树：左子 &lt; 根 &lt; 右子"></p>
 <ul>
 <li>可见：<ul>
 <li>左旋中的“左”，意味着“被旋转的节点将变成一个左节点”；</li>

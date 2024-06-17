@@ -116,7 +116,7 @@
   <h1 id="计数排序"><a href="#计数排序" class="headerlink" title="计数排序"></a>计数排序</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>计数排序的核心在于将输入的数据值转化为键存储在额外开辟的数组空间中。作为一种线性时间复杂度的排序，计数排序要求输入的数据必须是有确定范围的整数。</p>
 <h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p>计数排序和基数排序都是非比较类排序，过程比较简单，但是计数是比较巧妙的，借助第三个数组 <code>countsArr</code>  存元素出现的频率往后累加，对应减一即可得出该元素在排序数组中的位置。</p>
 <h2 id="算法复杂度"><a href="#算法复杂度" class="headerlink" title="算法复杂度"></a>算法复杂度</h2><p>时间复杂度为 ：O(N + max + 1)</p>
-<h2 id="排序过程"><a href="#排序过程" class="headerlink" title="排序过程"></a>排序过程</h2><p><img src="http://pic.xishng.top/img/202201171546782.gif" alt="计数排序示意图"></p>
+<h2 id="排序过程"><a href="#排序过程" class="headerlink" title="排序过程"></a>排序过程</h2><p><img src="/images/pic/202201171546782.gif" alt="计数排序示意图"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[UNSORTED]:      [1 4 2 4 6 9 8 2]</span><br><span class="line">[DEBUG countsArr]:  [0 1 3 3 5 5 6 6 7 8]</span><br><span class="line">[SORTED]:        [1 2 2 4 4 6 8 9]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="实用场景"><a href="#实用场景" class="headerlink" title="实用场景"></a>实用场景</h2><p>计数排序的复杂度比任何基于比较的排序都要低，不过空间开销不容忽视。</p>
